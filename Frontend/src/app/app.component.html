@@ -27,46 +27,48 @@
     <!-- sidebar -->
     <div class="sidebar">
 
-      <button class="compose "> <span class="material-symbols-outlined">edit</span>Compose</button>
-      <div class="sidebar_options">
+      <button class="compose" (click)="click('compose')"> <span class="material-symbols-outlined"
+          (click)="click('Compose')">edit</span>Compose</button>
+      <div class="sidebar_options" (click)="click('inbox')">
         <span class="material-symbols-outlined"> all_inbox</span>
         <h3>Inbox</h3>
       </div>
-      <div class="sidebar_options">
+      <div class="sidebar_options" (click)="click('starred')">
         <span class="material-symbols-outlined"> star</span>
         <h3>Starred</h3>
       </div>
-      <div class="sidebar_options">
+      <div class="sidebar_options" (click)="click('snoozed')">
         <span class="material-symbols-outlined"> snooze</span>
         <h3>Snoozed</h3>
       </div>
-      <div class="sidebar_options">
+      <div class="sidebar_options" (click)="click('sent')">
         <span class="material-symbols-outlined"> send</span>
         <h3>Sent</h3>
       </div>
-      <div class="sidebar_options">
+      <div class="sidebar_options" (click)="click('draft')">
         <span class="material-symbols-outlined"> draft</span>
         <h3>Drafts</h3>
       </div>
-      <div class="sidebar_options">
+      <div class="sidebar_options" (click)="click('trash')">
         <span class="material-symbols-outlined"> delete</span>
         <h3>Trash</h3>
       </div>
       <div class="sidebar_footer">
         <div class="sidebar_footerIcons">
-          <span class="material-symbols-outlined"> person </span>
+          <span class="material-symbols-outlined" (click)="click('person')"> person </span>
           <span class="material-symbols-outlined"> duo </span>
           <span class="material-symbols-outlined"> phone </span>
         </div>
       </div>
       <div class="lable">
         <h3>Lables</h3>
-        <span class="material-symbols-outlined">add</span>
+        <span class="material-symbols-outlined" (click)="click('lable')">add</span>
       </div>
 
     </div>
 
     <div class="content">
+
       <div class="content_header">
         <div class="content_header_left">
           <div>
@@ -88,8 +90,18 @@
           <span class="material-symbols-outlined">chevron_left</span>
           <span class="material-symbols-outlined">chevron_right</span>
         </div>
-      </div>
 
+      </div>
+      
+      <div class="layer" id="inbox">11111</div>
+      <div class="layer" id="starred">2222</div>
+      <div class="layer" id="snoozed">33333</div>
+      <div class="layer" id="sent">444</div>
+      <div class="layer" id="draft">555</div>
+      <div class="layer" id="trash">666</div>
+      <div class="layer" id="person">777</div>
+      <div class="layer" id="lable">888</div>
+      <div class="layer" id="compose">999</div>
 
     </div>
   </div>

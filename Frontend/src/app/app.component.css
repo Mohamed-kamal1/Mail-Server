@@ -2,9 +2,11 @@
   margin: 0;
   padding: 0;
 }
-.contain{
+
+.contain {
   background-color: #dae2f274;
 }
+
 
 .material-symbols-outlined {
   background-color: inherit
@@ -181,7 +183,6 @@
   padding: 15px;
   border: 10px solid white;
   border-radius: 5%;
-  overflow: hidden scroll;
 
 }
 
@@ -259,4 +260,41 @@
 
 .content_header_left div ul li span:not(:last-child) {
   border-bottom: 1px solid #ddd;
+}
+
+.layer {
+  position: relative;
+  width: 100%;
+  overflow: hidden scroll;
+  padding: 10px;
+  border-radius: 10px;
+  height: 90%;
+  background-color: #dae2f2;
+  z-index: -1;
+}
+
+#inbox {}
+#starred {
+  top: -90%;
+}
+#snoozed {
+  top: -180%;
+}
+#sent {
+  top: -270%;
+}
+#draft {
+  top: -360%;
+}
+#trash {
+  top: -450%;
+}
+#person {
+  top: -540%;
+}
+#lable {
+  top: -630%;
+}
+#compose {
+  top: -720%;
 }
