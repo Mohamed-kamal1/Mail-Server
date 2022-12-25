@@ -1,0 +1,262 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+.contain{
+  background-color: #dae2f274;
+}
+
+.material-symbols-outlined {
+  background-color: inherit
+}
+
+/* Header */
+.header_left img {
+  object-fit: contain;
+  height: 80px;
+  margin-left: 5px;
+}
+
+.header {
+  background-color: #dae2f2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.header_left {
+  display: flex;
+  align-items: center;
+}
+
+.header_left span {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.header_middle {
+  display: flex;
+  flex: 0.75;
+  align-items: center;
+  background-color: rgb(245, 245, 245);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.header_middle input {
+  border: none;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  font-size: medium;
+  background-color: transparent;
+}
+
+.header_right {
+  display: flex;
+  padding-right: 20px;
+}
+
+.header_right span {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.header_left span:hover,
+.header_right span:hover {
+  background-color: rgb(186, 200, 233);
+  font-weight: 800;
+}
+
+.main_body {
+  background-color: #dae2f200;
+  display: flex;
+  height: 85vh;
+}
+
+/* Sidebar */
+.sidebar {
+  background-color: #dae2f2;
+  flex: 0.3;
+  max-width: 20%;
+  padding: 10px;
+}
+
+.compose {
+  font-size: 20px;
+  margin: 15px;
+  text-transform: capitalize;
+  padding: 15px;
+  border-radius: 30px;
+  background-color: rgb(186, 200, 233);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.75);
+}
+
+.compose span {
+  margin-right: 5px;
+}
+
+.sidebar_options {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 10px;
+  border-radius: 0 20px 20px 0;
+  cursor: pointer;
+}
+
+.sidebar_options span {
+  padding: 5px;
+}
+
+.sidebar_options h3 {
+  flex: 1;
+  margin-left: 10px;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.sidebar_options:hover,
+.sidebar_options:hover h3,
+.sidebar_options:hover span {
+  background-color: rgb(186, 200, 233);
+  font-weight: 800;
+}
+
+.sidebar_footer {
+  display: flex;
+  justify-content: center;
+}
+
+.sidebar_footerIcons span {
+  margin: 7px;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.sidebar_footer span:hover {
+  background-color: rgb(186, 200, 233);
+  font-weight: 800;
+}
+
+.lable {
+  margin-top: 20px;
+  display: flex;
+  align-items: center;
+  height: 40px;
+  padding: 0 10px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.lable h3 {}
+
+.lable span {
+  margin-left: 50%;
+  cursor: pointer;
+  border-radius: 50%;
+  padding: 10px;
+}
+
+.lable span:hover {
+  background-color: rgb(186, 200, 233);
+  font-weight: 800;
+}
+
+
+.content {
+  background-color: white;
+  flex: 1;
+  max-width: 80%;
+  margin: 0 20px;
+  padding: 15px;
+  border: 10px solid white;
+  border-radius: 5%;
+  overflow: hidden scroll;
+
+}
+
+.content_header {
+  position: sticky;
+  top: -20px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  background-color: white;
+  z-index: 999;
+  padding: 8px;
+}
+
+.content_header_left,
+.content_header_right {
+  display: flex;
+  align-items: center;
+  background-color: white;
+}
+
+.content_header_left span,
+.content_header_right span,
+.content_header_left div span,
+.content_header_left div input {
+  margin: 5px;
+  cursor: pointer;
+  background-color: white;
+  border-radius: 50%;
+  padding: 5px;
+}
+
+.content_header_left div {
+  background-color: white;
+  border-radius: 15%;
+  padding: 5px;
+}
+
+.content_header_left span:hover,
+.content_header_right span:hover,
+.content_header_left div:hover,
+.content_header_left div span:hover {
+  background-color: #eee;
+  border: 5px;
+}
+
+.content_header_left div ul {
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #eee;
+  position: absolute;
+  left: 0.75%;
+  top: 80%;
+  min-width: 150px;
+  display: none;
+  z-index: 1;
+  border-radius: 5%;
+
+}
+
+.content_header_left div ul li span {
+  display: block;
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  transition: 0.5s;
+  background-color: #eee;
+}
+
+.content_header_left div ul li span:hover {
+  padding-left: 25px;
+}
+
+.content_header_left div ul li span:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
