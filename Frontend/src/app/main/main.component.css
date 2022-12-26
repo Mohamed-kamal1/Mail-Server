@@ -1,0 +1,63 @@
+.material-symbols-outlined {
+  background-color: inherit;
+  cursor: pointer;
+}
+
+/* Header */
+.header_left img {
+  object-fit: contain;
+  height: 80px;
+  margin-left: 5px;
+}
+
+.header {
+  background-color: #dae2f2;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.header_left {
+  display: flex;
+  align-items: center;
+  margin-left: 5%;
+}
+
+.header_left span {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+.header_right {
+  display: flex;
+  padding-right: 20px;
+  margin-right: 5%;
+}
+
+.header_right span {
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 50%;
+}
+
+
+.sign_in,.sign_up {
+  font-size: 20px;
+  margin: 5px;
+  padding: 10px;
+  border-radius: 30px;
+  background-color: rgb(186, 200, 233);
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.75);
+}
+
+.sign_in span {
+  margin-right: 5px;
+}
+
