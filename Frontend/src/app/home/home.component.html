@@ -1,0 +1,154 @@
+<!-- header -->
+
+<div class="contain">
+  <div class="header">
+
+    <div class="header_left">
+      <span class="material-symbols-outlined">menu</span>
+      <img src="https://cdn-icons-png.flaticon.com/512/761/761755.png" alt="">
+    </div>
+
+    <div class="header_middle">
+      <span class="material-symbols-outlined">search</span>
+      <input type="text" placeholder="Search Mail" />
+      <span class="material-symbols-outlined">arrow_drop_down</span>
+    </div>
+
+    <div class="header_right">
+      <span class="material-symbols-outlined">apps</span>
+      <span class="material-symbols-outlined">notifications</span>
+      <span class="material-symbols-outlined">account_circle</span>
+    </div>
+
+  </div>
+
+  <div class="main_body">
+
+    <!-- sidebar -->
+    <div class="sidebar">
+
+      <button class="compose" (click)="click('compose')"> <span class="material-symbols-outlined"
+          (click)="click('Compose')">edit</span>Compose</button>
+      <div class="sidebar_options" (click)="click('inbox')">
+        <span class="material-symbols-outlined"> all_inbox</span>
+        <h3>Inbox</h3>
+      </div>
+      <div class="sidebar_options" (click)="click('starred')">
+        <span class="material-symbols-outlined"> star</span>
+        <h3>Starred</h3>
+      </div>
+      <div class="sidebar_options" (click)="click('snoozed')">
+        <span class="material-symbols-outlined"> snooze</span>
+        <h3>Snoozed</h3>
+      </div>
+      <div class="sidebar_options" (click)="click('sent')">
+        <span class="material-symbols-outlined"> send</span>
+        <h3>Sent</h3>
+      </div>
+      <div class="sidebar_options" (click)="click('draft')">
+        <span class="material-symbols-outlined"> draft</span>
+        <h3>Drafts</h3>
+      </div>
+      <div class="sidebar_options" (click)="click('trash')">
+        <span class="material-symbols-outlined"> delete</span>
+        <h3>Trash</h3>
+      </div>
+      <div class="sidebar_footer">
+        <div class="sidebar_footerIcons">
+          <span class="material-symbols-outlined" (click)="click('person')"> person </span>
+          <span class="material-symbols-outlined"> duo </span>
+          <span class="material-symbols-outlined"> phone </span>
+        </div>
+      </div>
+      <div class="lable">
+        <h3>Lables</h3>
+        <span class="material-symbols-outlined" (click)="click('lable')">add</span>
+      </div>
+
+    </div>
+
+    <div class="content">
+
+      <div class="content_header">
+        <div class="content_header_left">
+          <div>
+            <input type="checkbox" />
+            <span class="material-symbols-outlined" (click)="select_menu()">arrow_drop_down</span>
+            <ul id="select">
+              <li><span>All</span></li>
+              <li><span>None</span></li>
+              <li><span>Read</span></li>
+              <li><span>Unread</span></li>
+
+
+            </ul>
+          </div>
+          <span class="material-symbols-outlined"> refresh</span>
+          <span class="material-symbols-outlined">more_vert</span>
+        </div>
+        <div class="content_header_right">
+          <span class="material-symbols-outlined">chevron_left</span>
+          <span class="material-symbols-outlined">chevron_right</span>
+        </div>
+
+      </div>
+
+      <div class="layer" id="inbox">11111</div>
+      <div class="layer" id="starred">2222</div>
+      <div class="layer" id="snoozed">33333</div>
+      <div class="layer" id="sent">444</div>
+      <div class="layer" id="draft">555</div>
+      <div class="layer" id="trash">666</div>
+      <div class="layer" id="person">777</div>
+      <div class="layer" id="lable">888</div>
+
+      <div class="layer" id="compose">
+        <form method="post">
+          <div class="header">
+            <div class="header_left">New message</div>
+            <div class="header_right">
+              <span class="material-symbols-outlined">close</span>
+              <div id="draft_">discard draft</div>
+            </div>
+          </div>
+          <input type="email" placeholder="Recipients">
+          <input type="text" placeholder="Subject">
+          <textarea cols="30" rows="10"></textarea>
+          <div class="footer">
+            <div class="footer_left">
+              <button id="send_btn" class="btn">Send<span class="material-symbols-outlined">send</span></button>
+              <span class="material-symbols-outlined"> attach_file</span>
+              <span class="material-symbols-outlined"> image</span>
+            </div>
+            <div class="footer_right">
+              <span class="material-symbols-outlined"> delete</span>
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>
+<script src="https://smtpjs.com/v3/smtp.js">
+</script>
+
+<script>
+  var btn = document.getElementById('send_btn');
+  btn.addEventListener('click', function (e) {
+    e.preventDefault();
+    console.log('hi');
+  })
+
+  // Email.send({
+  //   Host: "smtp.elasticemail.com",
+  //   Username: "username",
+  //   Password: "password",
+  //   To: 'them@website.com',
+  //   From: "you@isp.com",
+  //   Subject: "This is the subject",
+  //   Body: "And this is the body"
+  // }).then(
+  //   message => alert(message)
+  // );
+</script>
