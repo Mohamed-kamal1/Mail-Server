@@ -9,7 +9,13 @@ import java.lang.reflect.Array;
 
 @RequestMapping("/back")
 public class Controller {
+
+	UserManager userManager;
+
     @GetMapping("/signUp")
-    public void signUp(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email,@RequestParam String password) {
-    }
+    public void signUp(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email,@RequestParam String password) 
+	{
+		userManager = new UserManager();
+		userManager.signup(Fname, Lname, email, password);
+	}
 }
