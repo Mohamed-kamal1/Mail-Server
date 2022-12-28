@@ -17,9 +17,9 @@ public class Controller {
 		userManager = new UserManager();
 	}
     @GetMapping("/signUp")
-    public void signUp(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email,@RequestParam String password) 
+    public boolean signUp(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email,@RequestParam String password) 
 	{
-		userManager.signup(Fname, Lname, email, password);
+		return userManager.signup(Fname, Lname, email, password);
 	}
 
 	@GetMapping("/login")

@@ -13,15 +13,18 @@ public class UserManager {
 	}
 
 
-	public void signup(String fname, String lname, String email, String password)
+	public boolean signup(String fname, String lname, String email, String password)
 	{
+		if (users.containsKey(email)) return false;
 		User newUser = new User(fname, lname, email, password);
 		users.put(newUser.email, newUser);
+		return true;
 	}
 
 
 	public boolean login(String email, String password)
 	{
+		if (!users.containsKey(email)) return false;
 		User user = users.get(email);
 		return user.password.equals(password);
 	}
