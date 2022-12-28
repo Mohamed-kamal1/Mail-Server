@@ -1,13 +1,14 @@
-<form action="">
-<div class="signin-container" onclick="onclick">
-  <div class="top"></div>
-  <div class="bottom"></div>
-  <div class="center">
-    <h2>Please Sign In</h2>
-    <input type="email" placeholder="email" required />
-    <input type="password" placeholder="password" required />
-    <button type="submit" class="login" routerLink="/Home" routerLinkActive="active"
-      ariaCurrentWhenActive="page">Sign in</button>
+
+
+<form [formGroup]="login" action="" (ngSubmit)="signInData(login)">
+  <div class="signin-container" onclick="onclick">
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <div class="center">
+      <h2>Please Sign In</h2>
+      <input formControlName="email" type="email" placeholder="email" required />
+      <input formControlName="password" type="password" placeholder="password" required />
+      <button type="submit" class="login"routerLink="/Home" routerLinkActive="active" ariaCurrentWhenActive="page">Sign in</button>
+    </div>
   </div>
-</div>
 </form>

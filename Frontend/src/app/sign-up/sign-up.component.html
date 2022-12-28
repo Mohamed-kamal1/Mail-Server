@@ -1,14 +1,14 @@
-<form action="">
+<form [formGroup]="signup" action="" (ngSubmit)="signUpData(signup)">
   <div class="signup-container" onclick="onclick">
     <div class="top"></div>
     <div class="bottom"></div>
     <div class="center">
       <h2>Sign Up</h2>
-      <input type="text" placeholder="Username" required />
-      <input type="email" placeholder="email" required />
-      <input type="password" placeholder="password" required />
-      <button type="submit" class="login" routerLink="/Home" routerLinkActive="active"
-        ariaCurrentWhenActive="page">Sign up</button>
+      <input formControlName="Fname" type="text" placeholder="First Name" required />
+      <input formControlName="Lname" type="text" placeholder="Last Name" required />
+      <input formControlName="email" type="email" placeholder="email" required />
+      <input formControlName="password" type="password" placeholder="password" required />
+      <button type="submit" class="signup">Sign up</button>
     </div>
   </div>
 </form>
