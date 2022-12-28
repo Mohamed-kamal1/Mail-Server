@@ -17,14 +17,14 @@ public class Controller {
 		userManager = new UserManager();
 	}
     @GetMapping("/signUp")
-    public boolean signUp(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email,@RequestParam String password) 
+    public String signUp(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email,@RequestParam String password) 
 	{
-		return userManager.signup(Fname, Lname, email, password);
+		return Boolean.toString(userManager.signup(Fname, Lname, email, password));
 	}
 
 	@GetMapping("/login")
-    public boolean login(@RequestParam String email,@RequestParam String password) 
+    public String login(@RequestParam String email,@RequestParam String password) 
 	{
-		return userManager.login(email, password);
+		return Boolean.toString(userManager.login(email, password));
 	}
 }
