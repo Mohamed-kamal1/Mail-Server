@@ -1,4 +1,4 @@
-<form [formGroup]="signup" action="" (ngSubmit)="signUpData(signup)">
+<form [formGroup]="signup" action="" (ngSubmit)="signUpData(signup)" id="signUp">
   <div class="signup-container" onclick="onclick">
     <div class="top"></div>
     <div class="bottom"></div>
@@ -12,3 +12,8 @@
     </div>
   </div>
 </form>
+<div id="done">
+  <p>sign up successful <span class="material-symbols-outlined">sentiment_very_satisfied</span></p>
+  <button class="signup" routerLink="/SignIn">Sign in</button>
+
+</div>

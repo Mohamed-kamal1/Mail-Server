@@ -119,3 +119,39 @@ body {
   border: none;
   box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.75);
 }
+
+#done {
+  position: absolute;
+  width: 400px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  margin-left: -200px;
+  margin-top: -100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px;
+  border-radius: 30px;
+  background-color: #dae2f2;
+  transition: all 0.5s cubic-bezier(0.445, 0.05, 0, 1);
+    transition-delay: 0s;
+    color: #333;
+  display: none;
+
+}
+
+#done p {
+  display: flex;
+  font-size: 30px;
+  align-items: center;
+  justify-content: center;
+}
+
+#done p span {
+  font-size: 40px;
+  margin-left: 5px;
+}
+
+
