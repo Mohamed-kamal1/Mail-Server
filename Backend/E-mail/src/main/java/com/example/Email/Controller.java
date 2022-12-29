@@ -2,7 +2,7 @@ package com.example.Email;
 
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Array;
+// import java.lang.reflect.Array;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
