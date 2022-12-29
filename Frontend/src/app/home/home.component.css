@@ -74,6 +74,7 @@
   font-weight: 800;
 }
 
+
 .main_body {
   background-color: #dae2f200;
   display: flex;
@@ -194,7 +195,7 @@
   justify-content: space-between;
   border-bottom: 1px solid #eee;
   background-color: white;
-  z-index: 999;
+  z-index: 10;
   padding: 8px;
 }
 
@@ -414,3 +415,44 @@
   align-items: center;
 
 }
+
+.acount {
+  position: absolute;
+  top: 22%;
+  right: 0.5%;
+  width: 300px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  justify-items: center;
+  background-color: white;
+  border-radius: 20px;
+  box-shadow: 0px 2px 5px -2px rgba(0, 0, 0, 0.75);
+  z-index: 10;
+  display: none;
+}
+
+.acount div span {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: 75px;
+  margin-bottom: 25px;
+}
+
+.acount div p {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+}
+
+.acount div button {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  margin-top: 25px;
+  background-color: white;
+}
+

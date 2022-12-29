@@ -17,7 +17,7 @@
     <div class="header_right">
       <span class="material-symbols-outlined">apps</span>
       <span class="material-symbols-outlined">notifications</span>
-      <span class="material-symbols-outlined">account_circle</span>
+      <span class="material-symbols-outlined" (click)="signOut()">account_circle</span>
     </div>
 
   </div>
@@ -129,4 +129,13 @@
 
     </div>
   </div>
+      <div id="acount" class="acount">
+        <div>
+          <span class="material-symbols-outlined">account_circle</span>
+          <p>name name</p>
+          <p>email email email</p>
+          <button class="compose" routerLink="/SignIn">Sign out</button>
+        </div>
+      </div>
+
 </div>

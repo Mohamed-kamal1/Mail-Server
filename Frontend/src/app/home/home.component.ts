@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   title = 'Mail-Server';
 
   select = false;
+  signOut_display = false;
 
 
 
@@ -67,6 +68,17 @@ export class HomeComponent implements OnInit {
     }
   }
 
+  signOut() {
+    this.signOut_display = !this.signOut_display;
+    if (this.signOut_display) {
+      document.getElementById("acount")!.style.display = "flex";
+    }
+    else {
+      document.getElementById("acount")!.style.display = "none";
+    }
 
-  
+  }
+
+
+
 }
