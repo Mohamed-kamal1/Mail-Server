@@ -1,6 +1,7 @@
 <!-- header -->
 
 <div class="contain">
+
   <div class="header">
 
     <div class="header_left">
@@ -93,7 +94,9 @@
 
       </div>
 
-      <div class="layer" id="inbox">11111</div>
+      <div class="layer" id="inbox" >
+
+      </div>
       <div class="layer" id="starred">2222</div>
       <div class="layer" id="snoozed">33333</div>
       <div class="layer" id="sent">444</div>
@@ -103,7 +106,7 @@
       <div class="layer" id="lable">888</div>
 
       <div class="layer" id="compose">
-        <form method="post">
+        <form [formGroup]="email">
           <div class="header">
             <div class="header_left">New message</div>
             <div class="header_right">
@@ -111,31 +114,34 @@
               <div id="draft_">discard draft</div>
             </div>
           </div>
-          <input type="email" placeholder="Recipients">
-          <input type="text" placeholder="Subject">
-          <textarea cols="30" rows="10"></textarea>
+          <input formControlName="Recipient" type="email" placeholder="Recipient">
+          <input formControlName="Subject" type="text" placeholder="Subject">
+          <textarea formControlName="Content" cols="30" rows="10"></textarea>
           <div class="footer">
             <div class="footer_left">
-              <button id="send_btn" class="btn">Send<span class="material-symbols-outlined">send</span></button>
-              <span class="material-symbols-outlined"> attach_file</span>
+              <button id="send_btn" class="btn" (click)="sendEmail()">Send<span class="material-symbols-outlined">send</span></button>
+              <span  class="material-symbols-outlined"> attach_file</span>
               <span class="material-symbols-outlined"> image</span>
             </div>
             <div class="footer_right">
-              <span class="material-symbols-outlined"> delete</span>
+              <span class="material-symbols-outlined" (click)="click('')"> delete</span>
             </div>
           </div>
         </form>
       </div>
 
     </div>
+
   </div>
-      <div id="acount" class="acount">
-        <div>
-          <span class="material-symbols-outlined">account_circle</span>
-          <p>name name</p>
-          <p>email email email</p>
-          <button class="compose" routerLink="/SignIn">Sign out</button>
-        </div>
-      </div>
+
+
+  <div id="acount" class="acount">
+    <div>
+      <span class="material-symbols-outlined">account_circle</span>
+      <!-- <p>name name</p> -->
+      <!-- <p>email email email</p> -->
+      <button class="compose" routerLink="/SignIn">Sign out</button>
+    </div>
+  </div>
 
 </div>

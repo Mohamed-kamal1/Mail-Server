@@ -23,8 +23,13 @@ public class Controller {
 	}
 
 	@GetMapping("/login")
-    public String login(@RequestParam String email,@RequestParam String password) 
+    public String login(@RequestParam String email,@RequestParam String password)
 	{
 		return Boolean.toString(userManager.login(email, password));
+	}
+
+	@GetMapping("/email")
+	public String sendEmail(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+		return "done";
 	}
 }
