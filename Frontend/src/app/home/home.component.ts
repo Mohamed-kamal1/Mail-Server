@@ -50,7 +50,8 @@ export class HomeComponent implements OnInit {
       }
 
     }
-    // this.loadEmail("inbox", "mohamed", "mohamedkamal");
+    // for (let i = 0; i < 20; i++)
+    //   this.loadEmail("inbox", "mohamedkamalmohamed", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ");
   }
 
   back() {
@@ -126,7 +127,7 @@ export class HomeComponent implements OnInit {
 
 
 
-  loadEmail(container:string,username:string,Content:string) {
+  loadEmail(container: string, username: string, Content: string) {
     let body = document.getElementById(`${container}`)!;
 
     let email_content = document.createElement("div");
@@ -139,14 +140,22 @@ export class HomeComponent implements OnInit {
     email_content.style.padding = "0 10px";
     email_content.style.marginTop = "5px";
     email_content.style.cursor = "pointer";
-    email_content.addEventListener("mouseenter", ()=>email_content.style.boxShadow = "0 4px 4px -2px rgb(91, 101, 140)");
+    email_content.addEventListener("mouseenter", () => email_content.style.boxShadow = "0 4px 4px -2px rgb(91, 101, 140)");
     email_content.addEventListener("mouseleave", () => email_content.style.boxShadow = "0 0 0 0");
+
+    let checkbox = document.createElement("input");
+    checkbox.setAttribute("type", "checkbox");
+
+    let star = document.createElement("span");
+    star.className = "material-symbols-outlined";
+    star.appendChild(document.createTextNode("star"));
+    star.style.padding = "10px";
 
     let user = document.createElement("p");
     user.className = "user";
     let myText1 = document.createTextNode(`${username}`);
     user.appendChild(myText1);
-    user.style.width = "15%";
+    user.style.maxWidth = "15%";
     user.style.overflow = "hidden";
     user.style.padding = "10px";
     user.style.textOverflow = "ellipsis";
@@ -155,14 +164,22 @@ export class HomeComponent implements OnInit {
     email.className = "email";
     let myText2 = document.createTextNode(`${Content}`);
     email.appendChild(myText2);
-    email.style.width = "85%";
-    email.style.padding = "10px";
-    email.style.marginLeft = "50px";
+    email.style.maxWidth = "70%";
     email.style.overflow = "hidden";
+    email.style.padding = "10px";
     email.style.textOverflow = "ellipsis";
 
+    let trash = document.createElement("span");
+    trash.className = "material-symbols-outlined";
+    trash.appendChild(document.createTextNode("delete"));
+    trash.style.padding = "10px";
+    trash.style.marginLeft = "10px";
+
+    email_content.appendChild(checkbox);
+    email_content.appendChild(star);
     email_content.appendChild(user);
     email_content.appendChild(email);
+    email_content.appendChild(trash);
     body.appendChild(email_content);
 
 
