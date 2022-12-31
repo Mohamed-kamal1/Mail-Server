@@ -30,6 +30,36 @@ public class Controller {
 
 	@GetMapping("/email")
 	public String sendEmail(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
-		return "done";
+		return "true or false";
+	}
+	@GetMapping("/inbox")
+	public String inbox(){
+
+		return "json file";
+	}
+	@GetMapping("/starred")
+	public String stared(){
+
+		return "json file";
+	}
+	@GetMapping("/sent")
+	public String sent(){
+
+		return "json file";
+	}
+	@GetMapping("/draft")
+	public String draft(){
+
+		return "json file";
+	}
+	@GetMapping("/trash")
+	public String trash(){
+
+		return "json file";
+	}
+	@GetMapping("/contacts")
+	public String contacts(){
+
+		return "json file";
 	}
 }

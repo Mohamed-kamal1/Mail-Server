@@ -32,17 +32,23 @@ export class ServicesService {
     })
   }
 
-  sendEmailServices(Recipient: any, Subject: any,Content:any) {
+  sendEmailServices(Recipient: any, Subject: any, Content: any) {
     return this.http.get('http://localhost:8080/back/email', {
       responseType: 'text',
       params: {
         Recipient: Recipient,
         Subject: Subject,
-        Content:Content
+        Content: Content
       },
       observe: "response"
     })
   }
-
-
+  openFolderServices(folder: string) {
+    return this.http.get(`http://localhost:8080/back/${folder}`, {
+      responseType: 'json',
+      params: {
+      },
+      observe: "response"
+    })
+  }
 }

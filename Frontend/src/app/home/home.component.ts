@@ -46,12 +46,12 @@ export class HomeComponent implements OnInit {
       }
       else if (this.isSent == 'true') {
         alert("Done");
+        this.click("");
 
       }
 
     }
-    // for (let i = 0; i < 20; i++)
-    //   this.loadEmail("inbox", "mohamedkamalmohamed", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ");
+
   }
 
   back() {
@@ -62,6 +62,17 @@ export class HomeComponent implements OnInit {
       })
   }
 
+  folder_back(folder: string) {
+    this.click(`${folder}`);
+    document.getElementById(`${folder}`)!.innerHTML = "";
+    // this.servicesService.openFolderServices(folder)
+    //   .subscribe((Response) => {
+    //     console.log(Response.body);
+    //   })
+
+    for (let i = 0; i < 10; i++)
+      this.loadEmail(`${folder}`, "mohamedkamalmohamed", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ");
+  }
 
 
   select_menu() {
@@ -82,7 +93,7 @@ export class HomeComponent implements OnInit {
     document.getElementById("sent")!.style.zIndex = "-1";
     document.getElementById("draft")!.style.zIndex = "-1";
     document.getElementById("trash")!.style.zIndex = "-1";
-    document.getElementById("person")!.style.zIndex = "-1";
+    document.getElementById("contacts")!.style.zIndex = "-1";
     document.getElementById("lable")!.style.zIndex = "-1";
     document.getElementById("compose")!.style.zIndex = "-1";
     if (click == "inbox") {
@@ -103,8 +114,8 @@ export class HomeComponent implements OnInit {
     else if (click == "trash") {
       document.getElementById("trash")!.style.zIndex = "1";
     }
-    else if (click == "person") {
-      document.getElementById("person")!.style.zIndex = "1";
+    else if (click == "contacts") {
+      document.getElementById("contacts")!.style.zIndex = "1";
     }
     else if (click == "lable") {
       document.getElementById("lable")!.style.zIndex = "1";
@@ -124,8 +135,6 @@ export class HomeComponent implements OnInit {
     }
 
   }
-
-
 
   loadEmail(container: string, username: string, Content: string) {
     let body = document.getElementById(`${container}`)!;
