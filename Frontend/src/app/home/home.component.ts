@@ -65,13 +65,25 @@ export class HomeComponent implements OnInit {
   folder_back(folder: string) {
     this.click(`${folder}`);
     document.getElementById(`${folder}`)!.innerHTML = "";
-    // this.servicesService.openFolderServices(folder)
-    //   .subscribe((Response) => {
-    //     console.log(Response.body);
-    //   })
+    this.servicesService.openFolderServices(folder)
+      .subscribe((Response) => {
+        console.log(Response.body);
+      })
 
     for (let i = 0; i < 10; i++)
-      this.loadEmail(`${folder}`, "mohamedkamalmohamed", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ");
+      this.loadEmail(`${folder}`, "mohamedkamalmohamed", "mohamed said iam happy", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ");
+  }
+  add_to(folder: string, Recipient: any, Subject: any, Content: any) {
+    this.servicesService.addTo(folder, Recipient, Subject, Content)
+      .subscribe((Response) => {
+        console.log(Response.body);
+      })
+  }
+  remove_from(folder: string, Recipient: any, Subject: any, Content: any) {
+    this.servicesService.removeFrom(folder, Recipient, Subject, Content)
+      .subscribe((Response) => {
+        console.log(Response.body);
+      })
   }
 
 
@@ -136,7 +148,10 @@ export class HomeComponent implements OnInit {
 
   }
 
-  loadEmail(container: string, username: string, Content: string) {
+  loadEmail(container: string, username: string, subject: string, Content: string) {
+    let starredF = false;
+
+
     let body = document.getElementById(`${container}`)!;
 
     let email_content = document.createElement("div");
@@ -152,6 +167,7 @@ export class HomeComponent implements OnInit {
     email_content.addEventListener("mouseenter", () => email_content.style.boxShadow = "0 4px 4px -2px rgb(91, 101, 140)");
     email_content.addEventListener("mouseleave", () => email_content.style.boxShadow = "0 0 0 0");
 
+
     let checkbox = document.createElement("input");
     checkbox.setAttribute("type", "checkbox");
 
@@ -159,6 +175,20 @@ export class HomeComponent implements OnInit {
     star.className = "material-symbols-outlined";
     star.appendChild(document.createTextNode("star"));
     star.style.padding = "10px";
+    star.addEventListener("click", () => {
+      if (starredF) {
+        star.style.color = "black";
+        starredF = !starredF;
+        this.remove_from("starred", username, subject, Content);
+
+      }
+      else {
+        star.style.color = "yellow";
+        starredF = !starredF;
+        this.add_to("starred", username, subject, Content);
+      }
+
+    });
 
     let user = document.createElement("p");
     user.className = "user";
@@ -177,12 +207,79 @@ export class HomeComponent implements OnInit {
     email.style.overflow = "hidden";
     email.style.padding = "10px";
     email.style.textOverflow = "ellipsis";
+    /////////
+    email.addEventListener("click", () => {
+      let message = document.createElement("div");
+      message.style.width = "80%";
+      message.style.height = "90%";
+      message.style.backgroundColor = "white";
+      message.style.zIndex = "100";
+      message.style.position = "absolute";
+      message.style.top = "5%";
+      message.style.left = "10%";
+      message.style.borderRadius = "20px";
+      message.style.boxShadow = "0 4px 4px -2px rgb(91, 101, 140)";
+      let header = document.createElement("div");
+      message.appendChild(header);
+      let Subject = document.createElement("p");
+      let close = document.createElement("span");
+      let person = document.createElement("div");
+      let contant = document.createElement("p");
+      header.appendChild(Subject);
+      header.appendChild(close);
+      message.appendChild(person);
+      message.appendChild(contant);
+      header.style.width = "100%";
+      header.style.height = "20%";
+      // header.style.backgroundColor = "green";
+      header.style.display = "flex";
+      header.style.padding = "20px";
+      close.className = "material-symbols-outlined";
+      close.appendChild(document.createTextNode("close"));
+      close.style.marginLeft = "5%";
+      close.style.cursor = "pointer";
+      close.addEventListener("click", () => message.style.display = "none");
+
+      Subject.appendChild(document.createTextNode(`${subject}`));
+      Subject.style.width = "90%";
+      Subject.style.fontWeight = "bold";
+      Subject.style.fontSize = "20px";
+
+      // person.style.background = "red";
+      person.style.height = "10%";
+      person.style.width = "100%";
+      person.style.padding = "10px 20px";
+      person.style.display = "flex";
+      let icon = document.createElement("span");
+      let name = document.createElement("p");
+      person.appendChild(icon);
+      person.appendChild(name);
+      icon.className = "material-symbols-outlined";
+      icon.appendChild(document.createTextNode("person"));
+      icon.style.marginRight = "20px";
+      name.appendChild(document.createTextNode(`${username}`));
+
+      contant.style.height = "70%";
+      contant.style.width = "100%";
+      // contant.style.backgroundColor = "red";
+      contant.appendChild(document.createTextNode(`${Content}`));
+      contant.style.padding = "20px 20px";
+
+
+
+
+      body.appendChild(message);
+
+    });
+
 
     let trash = document.createElement("span");
     trash.className = "material-symbols-outlined";
     trash.appendChild(document.createTextNode("delete"));
     trash.style.padding = "10px";
     trash.style.marginLeft = "10px";
+    trash.addEventListener("click", () => { email_content.style.display = "none"; });
+
 
     email_content.appendChild(checkbox);
     email_content.appendChild(star);

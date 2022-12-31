@@ -51,4 +51,26 @@ export class ServicesService {
       observe: "response"
     })
   }
+  addTo(folder: string, Recipient: any, Subject: any, Content: any) {
+    return this.http.get(`http://localhost:8080/back/to${folder}`, {
+      responseType: 'text',
+      params: {
+        Recipient: Recipient,
+        Subject: Subject,
+        Content: Content
+      },
+      observe: "response"
+    })
+  }
+  removeFrom(folder: string, Recipient: any, Subject: any, Content: any) {
+    return this.http.get(`http://localhost:8080/back/from${folder}`, {
+      responseType: 'text',
+      params: {
+        Recipient: Recipient,
+        Subject: Subject,
+        Content: Content
+      },
+      observe: "response"
+    })
+  }
 }

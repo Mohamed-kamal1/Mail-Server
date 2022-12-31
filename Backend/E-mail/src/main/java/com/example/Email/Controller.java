@@ -35,7 +35,7 @@ public class Controller {
 	@GetMapping("/inbox")
 	public String inbox(){
 
-		return "json file";
+		return "json file"; //{email,recipient, subject ,content, starred}
 	}
 	@GetMapping("/starred")
 	public String stared(){
@@ -61,5 +61,22 @@ public class Controller {
 	public String contacts(){
 
 		return "json file";
+	}
+
+	@GetMapping("/totrash")
+	public String addToTrash(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+		return "done";
+	}
+	@GetMapping("/fromtrash")
+	public String removeFromTrash(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+		return "done";
+	}
+	@GetMapping("/tostarred")
+	public String addToStarred(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+		return "done";
+	}
+	@GetMapping("/fromstarred")
+	public String removeFromStarred(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+		return "done";
 	}
 }
