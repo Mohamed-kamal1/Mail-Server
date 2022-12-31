@@ -3,6 +3,20 @@
   padding: 0;
 }
 
+*::-webkit-scrollbar {
+  width: 0;
+}
+
+*::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+}
+
+*::-webkit-scrollbar-thumb {
+  border-radius: 100px;
+  background: #4f5acd;
+  border: 2px solid rgba(0, 0, 0, 0.2);
+}
+
 .contain {
   background-color: #dae2f274;
 }
@@ -301,6 +315,30 @@
 
 #contacts {
   top: -540%;
+  left: 35%;
+  width: 30%;
+  background-color: aliceblue;
+  box-shadow: 0 0 4px 4px #dae2f2;
+  z-index: 10;
+}
+
+#contacts input {
+  border: none;
+  width: 100%;
+  padding: 10px;
+  outline: none;
+  font-size: medium;
+  background-color: white;
+  border-radius: 20px;
+}
+
+#contacts div {
+  width: 100%;
+  height: 85%;
+  background-color: white;
+  border-radius: 20px;
+  margin: 20px 0;
+  padding: 20px;
 }
 
 #lable {

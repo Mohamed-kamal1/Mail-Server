@@ -71,7 +71,7 @@ export class HomeComponent implements OnInit {
       })
 
     for (let i = 0; i < 10; i++)
-      this.loadEmail(`${folder}`, "mohamedkamalmohamed", "mohamed said iam happy", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ");
+      this.loadEmail(`${folder}`, "mohamedkamalmohamed", "subject", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ", true);
   }
   add_to(folder: string, Recipient: any, Subject: any, Content: any) {
     this.servicesService.addTo(folder, Recipient, Subject, Content)
@@ -84,6 +84,15 @@ export class HomeComponent implements OnInit {
       .subscribe((Response) => {
         console.log(Response.body);
       })
+  }
+  delete_forever(Recipient: any, Subject: any, Content: any) {
+    this.servicesService.delete_forever(Recipient, Subject, Content)
+      .subscribe((Response) => {
+        console.log(Response.body);
+      })
+  }
+  contact() {
+    this.click("contacts");
   }
 
 
@@ -148,7 +157,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  loadEmail(container: string, username: string, subject: string, Content: string) {
+  loadEmail(container: string, username: string, subject: string, Content: string, starred: boolean) {
     let starredF = false;
 
 
@@ -175,6 +184,10 @@ export class HomeComponent implements OnInit {
     star.className = "material-symbols-outlined";
     star.appendChild(document.createTextNode("star"));
     star.style.padding = "10px";
+    if (container == "starred" || starred) {
+      star.style.color = "yellow";
+      starredF = true;
+    }
     star.addEventListener("click", () => {
       if (starredF) {
         star.style.color = "black";
@@ -275,20 +288,42 @@ export class HomeComponent implements OnInit {
 
     let trash = document.createElement("span");
     trash.className = "material-symbols-outlined";
-    trash.appendChild(document.createTextNode("delete"));
+
     trash.style.padding = "10px";
     trash.style.marginLeft = "10px";
-    trash.addEventListener("click", () => { email_content.style.display = "none"; });
+    trash.addEventListener("click", () => {
+      email_content.style.display = "none";
+      if (container == "trash") this.remove_from("trash", user, subject, Content);
+      else this.add_to("trash", user, subject, Content);
+    });
 
 
     email_content.appendChild(checkbox);
-    email_content.appendChild(star);
+    if (container != "trash") {
+      email_content.appendChild(star);
+    }
     email_content.appendChild(user);
     email_content.appendChild(email);
     email_content.appendChild(trash);
     body.appendChild(email_content);
 
+    if (container != "trash") {
+      trash.appendChild(document.createTextNode("delete"));
+    }
+    else {
+      trash.appendChild(document.createTextNode("restore_from_trash"));
+      let delete_forever = document.createElement("span");
+      delete_forever.className = "material-symbols-outlined";
+      delete_forever.appendChild(document.createTextNode("delete_forever"));
+      delete_forever.style.padding = "10px";
+      delete_forever.style.marginLeft = "10px";
+      delete_forever.addEventListener("click", () => {
+        email_content.style.display = "none";
+        this.delete_forever(user, subject, Content);
 
+      })
+      email_content.appendChild(delete_forever);
+    }
   }
 
 }

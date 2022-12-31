@@ -73,4 +73,15 @@ export class ServicesService {
       observe: "response"
     })
   }
+  delete_forever(Recipient: any, Subject: any, Content: any) {
+    return this.http.get(`http://localhost:8080/back/deleteforever`, {
+      responseType: 'text',
+      params: {
+        Recipient: Recipient,
+        Subject: Subject,
+        Content: Content
+      },
+      observe: "response"
+    })
+  }
 }

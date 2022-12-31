@@ -56,7 +56,7 @@
       </div>
       <div class="sidebar_footer">
         <div class="sidebar_footerIcons">
-          <span class="material-symbols-outlined" (click)="folder_back('contacts')"> person </span>
+          <span class="material-symbols-outlined" (click)="contact()"> person </span>
           <span class="material-symbols-outlined"> duo </span>
           <span class="material-symbols-outlined"> phone </span>
         </div>
@@ -102,7 +102,10 @@
       <div class="layer" id="sent"></div>
       <div class="layer" id="draft"></div>
       <div class="layer" id="trash"></div>
-      <div class="layer" id="contacts"></div>
+      <div class="layer" id="contacts">
+      <input type="text" placeholder="Search contacts" />
+      <div id="contacts_body"></div>
+      </div>
       <div class="layer" id="lable">lable</div>
 
       <div class="layer" id="compose">

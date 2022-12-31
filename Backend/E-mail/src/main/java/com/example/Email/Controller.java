@@ -79,4 +79,8 @@ public class Controller {
 	public String removeFromStarred(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
 		return "done";
 	}
+	@GetMapping("/deleteforever")
+	public String deleteForever(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+		return "done";
+	}
 }
