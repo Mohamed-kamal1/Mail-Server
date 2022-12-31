@@ -20,6 +20,28 @@ export class ServicesService {
       observe: "response"
     })
   }
+  addContect(fname: any, lname: any, Email: any) {
+    return this.http.get('http://localhost:8080/back/addcontact', {
+      responseType: 'text',
+      params: {
+        Fname: fname,
+        Lname: lname,
+        email: Email,
+      },
+      observe: "response"
+    })
+  }
+  deleteContect(fname: any, lname: any, Email: any) {
+    return this.http.get('http://localhost:8080/back/deletecontact', {
+      responseType: 'text',
+      params: {
+        Fname: fname,
+        Lname: lname,
+        email: Email,
+      },
+      observe: "response"
+    })
+  }
 
   signInServices(Email: any, Password: any) {
     return this.http.get('http://localhost:8080/back/login', {
@@ -45,6 +67,14 @@ export class ServicesService {
   }
   openFolderServices(folder: string) {
     return this.http.get(`http://localhost:8080/back/${folder}`, {
+      responseType: 'json',
+      params: {
+      },
+      observe: "response"
+    })
+  }
+  loadContacts() {
+    return this.http.get(`http://localhost:8080/backcontacts`, {
       responseType: 'json',
       params: {
       },
@@ -84,4 +114,5 @@ export class ServicesService {
       observe: "response"
     })
   }
+
 }

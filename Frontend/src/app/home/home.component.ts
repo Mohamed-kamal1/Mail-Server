@@ -93,6 +93,25 @@ export class HomeComponent implements OnInit {
   }
   contact() {
     this.click("contacts");
+    this.servicesService.loadContacts()
+      .subscribe((Response) => {
+        console.log(Response.body);
+      });
+    for (let i = 0; i < 10; i++)
+      this.loadContact("mohamed", "kamal", "gfhffg");
+
+  }
+  add_contact(Fname: string, Lname: string, email: string) {
+    this.servicesService.addContect(Fname, Lname, email)
+      .subscribe((Response) => {
+        console.log(Response.body);
+      });
+  }
+  delete_contact(Fname: string, Lname: string, email: string) {
+    this.servicesService.deleteContect(Fname, Lname, email)
+      .subscribe((Response) => {
+        console.log(Response.body);
+      });
   }
 
 
@@ -324,6 +343,28 @@ export class HomeComponent implements OnInit {
       })
       email_content.appendChild(delete_forever);
     }
+  }
+
+  loadContact(Fname: string, Lname: string, email: string) {
+    let body = document.getElementById("contacts_body")!;
+    let contant_body = document.createElement("div");
+    let icon = document.createElement("span");
+    icon.className = "material-symbols-outlined";
+    icon.appendChild(document.createTextNode("account_circle"));
+    icon.style.marginRight = "10px";
+    icon.style.color = "rgb(53 101 216)";
+    // contant_body.style.backgroundColor="red";
+    contant_body.style.display = "flex";
+    contant_body.style.alignItems = "center";
+
+    contant_body.appendChild(icon);
+    let name = document.createElement("p");
+    name.appendChild(document.createTextNode(`${Fname} ${Lname}`));
+    name.style.fontSize = "20px";
+    name.style.marginTop = "10px";
+    contant_body.appendChild(name);
+    body.appendChild(contant_body);
+
   }
 
 }

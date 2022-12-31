@@ -83,4 +83,19 @@ public class Controller {
 	public String deleteForever(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
 		return "done";
 	}
+	@GetMapping("/addcontact")
+	public String addContact(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email)
+	{
+		return "done";
+	}
+	@GetMapping("/deletecontact")
+	public String deleteContact(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email)
+	{
+		return "done";
+	}
+	@GetMapping("/contact")
+	public String getContacts()
+	{
+		return "Json file";//{first name,last name,email}
+	}
 }
