@@ -56,7 +56,7 @@
       </div>
       <div class="sidebar_footer">
         <div class="sidebar_footerIcons">
-          <span class="material-symbols-outlined" (click)="contact()"> person </span>
+          <span class="material-symbols-outlined" (click)="contacts()"> person </span>
           <span class="material-symbols-outlined"> duo </span>
           <span class="material-symbols-outlined"> phone </span>
         </div>
@@ -94,18 +94,22 @@
 
       </div>
 
-      <div class="layer" id="inbox" >
-
-      </div>
+      <div class="layer" id="inbox"></div>
       <div class="layer" id="starred"></div>
       <div class="layer" id="snoozed"></div>
       <div class="layer" id="sent"></div>
       <div class="layer" id="draft"></div>
       <div class="layer" id="trash"></div>
       <div class="layer" id="contacts">
-      <input type="text" placeholder="Search contacts" />
-      <div id="contacts_body"></div>
-      <span>+</span>
+        <input type="text" placeholder="Search contacts" />
+        <div id="contacts_body"></div>
+        <span id="add" (click)="addContact()">+</span>
+        <form  [formGroup]="contact" id="add_body" >
+          <input formControlName="name" type="text" placeholder="Name" required>
+          <input formControlName="email" type="email" placeholder="Email" required>
+          <button class="btn" (click)="add_contact()">Save</button>
+          <button class="btn " style="background-color: rgb(223, 24, 24);"  (click)="cancel()">Cancel</button>
+        </form>
       </div>
       <div class="layer" id="lable">lable</div>
 
@@ -114,17 +118,18 @@
           <div class="header">
             <div class="header_left">New message</div>
             <div class="header_right">
-              <span class="material-symbols-outlined">close</span>
+              <span class="material-symbols-outlined" (click)="draft_message()">close</span>
               <div id="draft_">discard draft</div>
             </div>
           </div>
-          <input formControlName="Recipient" type="email" placeholder="Recipient">
+          <input formControlName="Recipient" type="email" placeholder="Recipient" id="Recipient">
           <input formControlName="Subject" type="text" placeholder="Subject">
           <textarea formControlName="Content" cols="30" rows="10"></textarea>
           <div class="footer">
             <div class="footer_left">
-              <button id="send_btn" class="btn" (click)="sendEmail()">Send<span class="material-symbols-outlined">send</span></button>
-              <span  class="material-symbols-outlined"> attach_file</span>
+              <button id="send_btn" class="btn" (click)="sendEmail()">Send<span
+                  class="material-symbols-outlined">send</span></button>
+              <span class="material-symbols-outlined"> attach_file</span>
               <span class="material-symbols-outlined"> image</span>
             </div>
             <div class="footer_right">

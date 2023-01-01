@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit {
   signOut_display = false;
 
   email: FormGroup | any;
+  contact: FormGroup | any;
   isSent: any = "";
   Recipient: String = "";
   Subject: String = "";
@@ -28,6 +29,10 @@ export class HomeComponent implements OnInit {
       'Recipient': new FormControl(),
       'Subject': new FormControl(),
       'Content': new FormControl()
+    });
+    this.contact = new FormGroup({
+      'name': new FormControl(),
+      'email': new FormControl()
     })
   }
 
@@ -51,7 +56,14 @@ export class HomeComponent implements OnInit {
       }
 
     }
+  }
 
+  draft_message() {
+    this.Recipient = String(this.email.controls.Recipient.value);
+    this.Subject = String(this.email.controls.Subject.value);
+    this.Content = String(this.email.controls.Content.value);
+    this.add_to("draft", this.Recipient, this.Subject, this.email);
+    this.click('');
   }
 
   back() {
@@ -91,7 +103,7 @@ export class HomeComponent implements OnInit {
         console.log(Response.body);
       });
   }
-  contact() {
+  contacts() {
     this.click("contacts");
     this.servicesService.loadContacts()
       .subscribe((Response) => {
@@ -101,11 +113,14 @@ export class HomeComponent implements OnInit {
       this.loadContact("mohamed", "kamal", "gfhffg");
 
   }
-  add_contact(Fname: string, Lname: string, email: string) {
-    this.servicesService.addContect(Fname, Lname, email)
+  add_contact() {
+    let name = this.contact.controls.name.value;
+    let email = this.contact.controls.email.value;
+    this.servicesService.addContect(name, email)
       .subscribe((Response) => {
         console.log(Response.body);
       });
+    this.cancel();
   }
   delete_contact(Fname: string, Lname: string, email: string) {
     this.servicesService.deleteContect(Fname, Lname, email)
@@ -300,7 +315,6 @@ export class HomeComponent implements OnInit {
 
     });
 
-
     let trash = document.createElement("span");
     trash.className = "material-symbols-outlined";
 
@@ -314,7 +328,7 @@ export class HomeComponent implements OnInit {
 
 
     email_content.appendChild(checkbox);
-    if (container != "trash") {
+    if (container != "trash" && container != "draft") {
       email_content.appendChild(star);
     }
     email_content.appendChild(user);
@@ -414,12 +428,21 @@ export class HomeComponent implements OnInit {
     });
 
 
+
+
     contant_body.appendChild(icon);
     contant_body.appendChild(name);
     contant_body.appendChild(remove);
 
     contacts.appendChild(body);
 
+  }
+  addContact() {
+    document.getElementById("add_body")!.style.display = "block";
+
+  }
+  cancel() {
+    document.getElementById("add_body")!.style.display = "none";
   }
 
 }

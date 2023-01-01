@@ -30,12 +30,11 @@ export class ServicesService {
       observe: "response"
     })
   }
-  addContect(fname: any, lname: any, Email: any) {
+  addContect(name: any, Email: any) {
     return this.http.get('http://localhost:8080/back/addcontact', {
       responseType: 'text',
       params: {
-        Fname: fname,
-        Lname: lname,
+        name: name,
         email: Email,
       },
       observe: "response"

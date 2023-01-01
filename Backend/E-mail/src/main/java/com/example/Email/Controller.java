@@ -79,12 +79,12 @@ public class Controller {
 		return "done";
 	}
 	@GetMapping("/addcontact")
-	public String addContact(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email)
+	public String addContact(@RequestParam String name,@RequestParam String email)
 	{
 		return "done";
 	}
 	@GetMapping("/deletecontact")
-	public String deleteContact(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email)
+	public String deleteContact(@RequestParam String name,@RequestParam String email)
 	{
 		return "done";
 	}
