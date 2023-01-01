@@ -66,8 +66,8 @@ export class HomeComponent implements OnInit {
     this.click(`${folder}`);
     document.getElementById(`${folder}`)!.innerHTML = "";
     this.servicesService.openFolderServices(folder)
-      .subscribe((Response) => {
-        console.log(Response.body);
+      .subscribe((response) => {
+        console.log(response.body)
       })
 
     for (let i = 0; i < 10; i++)
@@ -77,19 +77,19 @@ export class HomeComponent implements OnInit {
     this.servicesService.addTo(folder, Recipient, Subject, Content)
       .subscribe((Response) => {
         console.log(Response.body);
-      })
+      });
   }
   remove_from(folder: string, Recipient: any, Subject: any, Content: any) {
     this.servicesService.removeFrom(folder, Recipient, Subject, Content)
       .subscribe((Response) => {
         console.log(Response.body);
-      })
+      });
   }
   delete_forever(Recipient: any, Subject: any, Content: any) {
     this.servicesService.delete_forever(Recipient, Subject, Content)
       .subscribe((Response) => {
         console.log(Response.body);
-      })
+      });
   }
   contact() {
     this.click("contacts");
@@ -263,9 +263,9 @@ export class HomeComponent implements OnInit {
       message.appendChild(contant);
       header.style.width = "100%";
       header.style.height = "20%";
-      // header.style.backgroundColor = "green";
       header.style.display = "flex";
       header.style.padding = "20px";
+
       close.className = "material-symbols-outlined";
       close.appendChild(document.createTextNode("close"));
       close.style.marginLeft = "5%";
@@ -277,7 +277,6 @@ export class HomeComponent implements OnInit {
       Subject.style.fontWeight = "bold";
       Subject.style.fontSize = "20px";
 
-      // person.style.background = "red";
       person.style.height = "10%";
       person.style.width = "100%";
       person.style.padding = "10px 20px";
@@ -286,6 +285,7 @@ export class HomeComponent implements OnInit {
       let name = document.createElement("p");
       person.appendChild(icon);
       person.appendChild(name);
+
       icon.className = "material-symbols-outlined";
       icon.appendChild(document.createTextNode("person"));
       icon.style.marginRight = "20px";
@@ -293,12 +293,8 @@ export class HomeComponent implements OnInit {
 
       contant.style.height = "70%";
       contant.style.width = "100%";
-      // contant.style.backgroundColor = "red";
       contant.appendChild(document.createTextNode(`${Content}`));
       contant.style.padding = "20px 20px";
-
-
-
 
       body.appendChild(message);
 
@@ -346,24 +342,83 @@ export class HomeComponent implements OnInit {
   }
 
   loadContact(Fname: string, Lname: string, email: string) {
-    let body = document.getElementById("contacts_body")!;
+    let click = false;
+    let contacts = document.getElementById("contacts_body")!;
     let contant_body = document.createElement("div");
+    let body = document.createElement("div");
+    body.appendChild(contant_body);
     let icon = document.createElement("span");
     icon.className = "material-symbols-outlined";
     icon.appendChild(document.createTextNode("account_circle"));
+    let remove = document.createElement("span");
+    remove.className = "material-symbols-outlined";
+    remove.appendChild(document.createTextNode("delete"));
+    remove.style.display = "none";
+    remove.style.marginLeft = "20px";
+    remove.addEventListener("click", () => {
+      this.delete_contact(Fname, Lname, email);
+      body.style.display = "none";
+    })
+
     icon.style.marginRight = "10px";
     icon.style.color = "rgb(53 101 216)";
-    // contant_body.style.backgroundColor="red";
-    contant_body.style.display = "flex";
-    contant_body.style.alignItems = "center";
-
-    contant_body.appendChild(icon);
     let name = document.createElement("p");
     name.appendChild(document.createTextNode(`${Fname} ${Lname}`));
     name.style.fontSize = "20px";
     name.style.marginTop = "10px";
+    contant_body.style.display = "flex";
+    contant_body.style.alignItems = "center";
+    body.style.margin = "0";
+    body.style.marginBottom = "2px";
+    body.style.padding = "0";
+    body.style.paddingLeft = "10px";
+    body.style.borderRadius = "30px";
+    body.style.cursor = "pointer";
+
+    contant_body.addEventListener("mouseenter", () => {
+      if (!click) {
+        body.style.boxShadow = "0 4px 4px -2px rgb(91, 101, 140)";
+        body.style.backgroundColor = "aliceblue";
+      }
+    });
+    contant_body.addEventListener("mouseleave", () => {
+      if (!click) {
+        body.style.boxShadow = "0 0 0 0";
+        body.style.backgroundColor = "white";
+      }
+    });
+
+    let mail = document.createElement("div");
+    let text = document.createTextNode(`${email}`);
+    mail.appendChild(text);
+    mail.style.display = "none";
+    mail.style.padding = "0 0 10px 40px"
+    body.appendChild(mail);
+    contant_body.addEventListener("click", () => {
+
+
+      if (!click) {
+        body.style.backgroundColor = "rgb(186, 200, 233)";
+        mail.style.display = "block";
+        remove.style.display = "block";
+
+      }
+      else {
+        body.style.backgroundColor = "white";
+        mail.style.display = "none";
+        remove.style.display = "none";
+
+      }
+      click = !click;
+
+    });
+
+
+    contant_body.appendChild(icon);
     contant_body.appendChild(name);
-    body.appendChild(contant_body);
+    contant_body.appendChild(remove);
+
+    contacts.appendChild(body);
 
   }
 

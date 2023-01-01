@@ -20,6 +20,16 @@ export class ServicesService {
       observe: "response"
     })
   }
+  signInServices(Email: any, Password: any) {
+    return this.http.get('http://localhost:8080/back/login', {
+      responseType: 'text',
+      params: {
+        email: Email,
+        password: Password
+      },
+      observe: "response"
+    })
+  }
   addContect(fname: any, lname: any, Email: any) {
     return this.http.get('http://localhost:8080/back/addcontact', {
       responseType: 'text',
@@ -42,20 +52,8 @@ export class ServicesService {
       observe: "response"
     })
   }
-
-  signInServices(Email: any, Password: any) {
-    return this.http.get('http://localhost:8080/back/login', {
-      responseType: 'text',
-      params: {
-        email: Email,
-        password: Password
-      },
-      observe: "response"
-    })
-  }
-
   sendEmailServices(Recipient: any, Subject: any, Content: any) {
-    return this.http.get('http://localhost:8080/back/email', {
+    return this.http.get(`http://localhost:8080/back/email`, {
       responseType: 'text',
       params: {
         Recipient: Recipient,
@@ -74,7 +72,7 @@ export class ServicesService {
     })
   }
   loadContacts() {
-    return this.http.get(`http://localhost:8080/backcontacts`, {
+    return this.http.get(`http://localhost:8080/back/contacts`, {
       responseType: 'json',
       params: {
       },

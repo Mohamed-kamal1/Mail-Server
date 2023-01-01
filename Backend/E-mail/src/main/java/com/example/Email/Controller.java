@@ -38,7 +38,7 @@ public class Controller {
 		return "json file"; //{email,recipient, subject ,content, starred}
 	}
 	@GetMapping("/starred")
-	public String stared(){
+	public String starred(){
 
 		return "json file";
 	}
@@ -54,11 +54,6 @@ public class Controller {
 	}
 	@GetMapping("/trash")
 	public String trash(){
-
-		return "json file";
-	}
-	@GetMapping("/contacts")
-	public String contacts(){
 
 		return "json file";
 	}
@@ -93,7 +88,7 @@ public class Controller {
 	{
 		return "done";
 	}
-	@GetMapping("/contact")
+	@GetMapping("/contacts")
 	public String getContacts()
 	{
 		return "Json file";//{first name,last name,email}
