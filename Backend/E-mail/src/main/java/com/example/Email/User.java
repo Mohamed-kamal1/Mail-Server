@@ -20,6 +20,10 @@ class User {
     public String getEmail() {return email;}
     public String getPassword() {return password;}
 
+    public Mail getMailAt(int i){
+        return this.mail.get(i);
+    }
+
     // Add mail to user's mail list as a received mail
     public void receiveMail(Mail m){
         m.toInbox();
