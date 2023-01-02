@@ -2,6 +2,7 @@ package com.example.Email;
 import java.util.ArrayList;
 
 class Mail{
+    public EmailID ID;
     private String subject;
     private String sender;
     private String[] receivers;
@@ -24,6 +25,8 @@ class Mail{
         this.attachments = a;
         // Email file organization is dependent of its creation.
         this.inbox = this.starred = this.sent = this.draft = this.trash = false;
+        // ID is set only when sent
+        this.ID = new EmailID("","","","");
     }
 
     // Getters
@@ -41,26 +44,40 @@ class Mail{
     public Boolean isDraft() {return draft;}
     public Boolean isTrash() {return trash;}
 
-    // Organization functions
-    public void toTrash(){
-        this.inbox = this.starred = this.sent = this.draft = false;
-        this.trash = true;
+    // ______________ Organization functions ______________
+
+    // Add or remove from trash.
+    public void toggleTrash() {
+        if (this.trash){ // If already in trash, remove and add to inbox.
+            this.inbox = true;
+            this.starred = this.sent = this.draft = false;
+            this.trash = false;
+        }else{ // If not in trash, remove from everything and add to trash.
+            this.inbox = this.starred = this.sent = this.draft = false;
+            this.trash = true;
+        }
     }
 
+    // Add to draft
     public void toDraft(){
         this.inbox = this.starred = this.sent = this.trash = false;
         this.draft = true;
     }
 
-    public void toStarred(){
-        this.starred = true;
+    // Add or remove from starred
+    public void toggleStarred(){
+        this.starred = !this.starred;
     }
 
+    // Add to inbox upon receiving
     public void toInbox(){
+        this.sent = false;
         this.inbox = true;
     }
 
+    // Add to sent and inbox folders upon sending
     public void toSentAndInbox(){
+        if (this.draft) this.draft = false;
         this.sent = true;
         this.inbox = true;
     }

@@ -20,14 +20,24 @@ class User {
     public String getEmail() {return email;}
     public String getPassword() {return password;}
 
-    public User userFromJson(String jsonfile){
-        return new Gson().fromJson(jsonfile, User.class);
+    // Add mail to user's mail list as a received mail
+    public void receiveMail(Mail m){
+        m.toInbox();
+        this.mail.add(m);
     }
 
-    public String jsonFromUser(User user){
-        return new Gson().toJson(user);
+    // Add mail to the user's mail list as a sent mail
+    public void sendMail(Mail m){
+        m.toSentAndInbox();
+        this.mail.add(m);
     }
 
+    // Get the next available index in the user's mail list
+    public String nextMailID(){
+        return String.valueOf(this.mail.size());
+    }
+
+    // Sort a mail list by some attribute
     public static void sortMailBy(ArrayList<Mail> mail, String field){
         if (field == "subject")
             mail.sort(Comparator.comparing(Mail::getSubject));
@@ -41,6 +51,7 @@ class User {
             mail.sort(Comparator.comparing(Mail::getImportance));
     }
 
+    // Get some folder and sort it by some attribute
     public ArrayList<Mail> getFolder(String target, String sortBy){
         ArrayList<Mail> list = new ArrayList();
 
