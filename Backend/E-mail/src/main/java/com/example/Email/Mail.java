@@ -16,9 +16,9 @@ class Mail{
     private Boolean draft;
     private Boolean trash;
 
-    public Mail(String s, String send, String[] rec, String d, String b, ArrayList<String> a){
+    public Mail(String s,  String[] rec, String d, String b, ArrayList<String> a){
         this.subject = s;
-        this.sender = send;
+       // this.sender = send;
         this.receivers = rec;
         this.date = d;
         this.body = b;
@@ -29,6 +29,9 @@ class Mail{
         this.ID = new EmailID("","","","");
     }
 
+    public void setSender(String sender){
+        this.sender=sender;
+    }
     // Getters
     public String getSubject() {return subject;}
     public String getSender() {return sender;}

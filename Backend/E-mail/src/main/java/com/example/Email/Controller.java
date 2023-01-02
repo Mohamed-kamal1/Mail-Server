@@ -2,6 +2,8 @@ package com.example.Email;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+
 // import java.lang.reflect.Array;
 
 @RestController
@@ -17,9 +19,11 @@ public class Controller {
 		userManager = new UserManager();
 	}
     @GetMapping("/signUp")
-    public String signUp(@RequestParam String Fname,@RequestParam String Lname,@RequestParam String email,@RequestParam String password) 
+    public String signUp(@RequestParam String name,@RequestParam String email,@RequestParam String password)
 	{
-		return Boolean.toString(userManager.signup(Fname, Lname, email, password));
+		ArrayList<Mail> mail = new ArrayList<Mail>(10);
+		User user = new User(name,email,password,mail );
+		return Boolean.toString(userManager.signUp(user));
 	}
 
 	@GetMapping("/login")
@@ -29,7 +33,9 @@ public class Controller {
 	}
 
 	@GetMapping("/email")
-	public String sendEmail(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+	public String sendEmail(@RequestParam String Subject,@RequestParam String[] Recipient,@RequestParam String date,@RequestParam String Content ){
+		Mail mail= new Mail(Subject,Recipient,date,Content, new ArrayList<String>());
+		userManager.processMail(mail);
 		return "true or false";
 	}
 	@GetMapping("/inbox")

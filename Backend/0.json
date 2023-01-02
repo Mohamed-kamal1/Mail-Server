@@ -1,6 +1,1 @@
-{
-  "fullname": "David Nagib",
-  "email": "dave@blabla.com",
-  "password": "something123",
-  "mail": []
-}
+{"fullname":"David Nagib","email":"dave@blabla.com","password":"something123","mail":[{"ID":{"senderID":"2","senderIndex":"0","receiverID":"0","receiverIndex":"0"},"subject":"null","sender":"kamal@blabla.com","receivers":["dave@blabla.com"],"date":"","body":"null","attachments":[],"importance":0,"inbox":true,"starred":false,"sent":false,"draft":false,"trash":false},{"ID":{"senderID":"2","senderIndex":"1","receiverID":"0","receiverIndex":"1"},"subject":"hello","sender":"kamal@blabla.com","receivers":["dave@blabla.com"],"date":"","body":"hello","attachments":[],"importance":0,"inbox":true,"starred":false,"sent":false,"draft":false,"trash":false},{"ID":{"senderID":"2","senderIndex":"2","receiverID":"0","receiverIndex":"2"},"subject":"hello","sender":"kamal@blabla.com","receivers":["dave@blabla.com"],"date":"","body":"hello","attachments":[],"importance":0,"inbox":true,"starred":false,"sent":false,"draft":false,"trash":false}]}

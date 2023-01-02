@@ -1,6 +1,1 @@
-{
-  "fullname": "Mohamed Kamal",
-  "email": "kamal@blabla.com",
-  "password": "password321",
-  "mail": []
-}
+{"fullname":"Mohamed Kamal","email":"kamal@blabla.com","password":"password321","mail":[{"ID":{"senderID":"2","senderIndex":"0","receiverID":"0","receiverIndex":""},"subject":"null","sender":"kamal@blabla.com","receivers":["dave@blabla.com"],"date":"","body":"null","attachments":[],"importance":0,"inbox":true,"starred":false,"sent":true,"draft":false,"trash":false},{"ID":{"senderID":"2","senderIndex":"1","receiverID":"0","receiverIndex":""},"subject":"hello","sender":"kamal@blabla.com","receivers":["dave@blabla.com"],"date":"","body":"hello","attachments":[],"importance":0,"inbox":true,"starred":false,"sent":true,"draft":false,"trash":false},{"ID":{"senderID":"2","senderIndex":"2","receiverID":"0","receiverIndex":""},"subject":"hello","sender":"kamal@blabla.com","receivers":["dave@blabla.com"],"date":"","body":"hello","attachments":[],"importance":0,"inbox":true,"starred":false,"sent":true,"draft":false,"trash":false}]}

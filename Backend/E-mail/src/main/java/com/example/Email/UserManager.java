@@ -10,6 +10,7 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class UserManager {
+     String user_login="";
     ArrayList<String> userEmails; // List of emails of users in a file
 
     // _____________________ Utility functions _____________________
@@ -68,6 +69,7 @@ public class UserManager {
     // and updates the user list json file.
     public Boolean signUp(User user){
         //If the email already exists, return false
+        readUsers();
         if(userEmails.contains(user.getEmail())) return false;
         Gson gson = new Gson();
 
@@ -87,16 +89,20 @@ public class UserManager {
 
     // Returns true or false to allow user's access to his account
     public boolean login(String email, String password){
+        readUsers();
         String targetID = getUserFile(email);
         if (targetID == null) return false;
         User test = fileToUser(targetID);
+        user_login = email;
         return (password.equals(test.getPassword()));
     }
 
     //Send mail to all receivers, and put it in the sent and inbox folders in the sender object
     public void processMail(Mail m){
+        readUsers();
         // Put receivers' email array in a queue
         Queue<String> queue = new LinkedList<>(Arrays.asList(m.getReceivers()));
+        m.setSender(user_login);
 
         // Open the sender's file and parse to User object
         String senderFile = this.getUserFile(m.getSender());

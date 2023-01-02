@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   email: FormGroup | any;
   contact: FormGroup | any;
   isSent: any = "";
-  Recipient: String = "";
+  Recipient: String[] =[];
   Subject: String = "";
   Content: String = "";
 
@@ -37,17 +37,19 @@ export class HomeComponent implements OnInit {
   }
 
   sendEmail() {
-    this.Recipient = String(this.email.controls.Recipient.value);
+    let s = String(this.email.controls.Recipient.value);
+    this.Recipient = s.split(" ");
+    console.log(this.Recipient);
     this.Subject = String(this.email.controls.Subject.value);
     this.Content = String(this.email.controls.Content.value);
 
-    if (this.Recipient == 'null' || this.Recipient.length == 0) {
+    if (s == 'null' || s.length == 0) {
       alert("Please specify recipient");
     }
     else {
       this.back();
       if (this.isSent == 'false') {
-        alert(`The address "${this.Recipient}" in the "To" field was not recognized. Please make sure that all addresses are properly formed.`);
+        alert(`The address "${this.Recipient}" in the "Recipient" field was not recognized. Please make sure that all addresses are properly formed.`);
       }
       else if (this.isSent == 'true') {
         alert("Done");
@@ -59,7 +61,8 @@ export class HomeComponent implements OnInit {
   }
 
   draft_message() {
-    this.Recipient = String(this.email.controls.Recipient.value);
+    let s = String(this.email.controls.Recipient.value);
+    this.Recipient = s.split(" ");
     this.Subject = String(this.email.controls.Subject.value);
     this.Content = String(this.email.controls.Content.value);
     this.add_to("draft", this.Recipient, this.Subject, this.email);
@@ -109,8 +112,7 @@ export class HomeComponent implements OnInit {
       .subscribe((Response) => {
         console.log(Response.body);
       });
-    for (let i = 0; i < 10; i++)
-      this.loadContact("mohamed", "kamal", "gfhffg");
+    // for (let i = 0; i < 10; i++)
 
   }
   add_contact() {
@@ -121,6 +123,8 @@ export class HomeComponent implements OnInit {
         console.log(Response.body);
       });
     this.cancel();
+    this.loadContact(this.contact.controls.name.value, "", this.contact.controls.email.value);
+
   }
   delete_contact(Fname: string, Lname: string, email: string) {
     this.servicesService.deleteContect(Fname, Lname, email)
@@ -227,6 +231,9 @@ export class HomeComponent implements OnInit {
         star.style.color = "black";
         starredF = !starredF;
         this.remove_from("starred", username, subject, Content);
+        if (container == "starred") {
+          email_content.style.display = "none";
+        }
 
       }
       else {

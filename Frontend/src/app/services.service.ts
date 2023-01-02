@@ -9,11 +9,10 @@ export class ServicesService {
   constructor(private http: HttpClient) { }
 
   signUpServices(fname: any, lname: any, Email: any, Password: any) {
-    return this.http.get('http://localhost:8080/back/signUp', {
+    return this.http.get(`http://localhost:8080/back/signUp`, {
       responseType: 'text',
       params: {
-        Fname: fname,
-        Lname: lname,
+        name: fname + " " + lname,
         email: Email,
         password: Password
       },
@@ -52,12 +51,22 @@ export class ServicesService {
     })
   }
   sendEmailServices(Recipient: any, Subject: any, Content: any) {
+    // const obj: any = {
+    //   Subject: Subject,
+    //   date : "",
+    //   Recipient: Recipient,
+    //   Content: Content,
+    //   attachments:[]
+    // };
+    let attachments: any=[] ;
     return this.http.get(`http://localhost:8080/back/email`, {
       responseType: 'text',
       params: {
-        Recipient: Recipient,
         Subject: Subject,
-        Content: Content
+        Recipient: Recipient,
+        date: "",
+        Content: Content,
+       // attachments: attachments
       },
       observe: "response"
     })
