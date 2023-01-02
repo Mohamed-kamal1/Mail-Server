@@ -2,30 +2,5 @@
   "fullname": "David Nagib",
   "email": "dave@blabla.com",
   "password": "something123",
-  "mail": [
-    {
-      "ID": {
-        "senderID": "0",
-        "senderIndex": "0",
-        "receiverID": "2",
-        "receiverIndex": ""
-      },
-      "subject": "This Is A Test",
-      "sender": "dave@blabla.com",
-      "receivers": [
-        "kamal@blabla.com",
-        "khayri@blabla.com",
-        "magdy@blabla.com"
-      ],
-      "date": "2023/2/1, 13:34",
-      "body": "I really really hope this works",
-      "attachments": [],
-      "importance": 0,
-      "inbox": true,
-      "starred": false,
-      "sent": true,
-      "draft": false,
-      "trash": false
-    }
-  ]
+  "mail": []
 }
