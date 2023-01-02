@@ -13,6 +13,7 @@ import java.util.ArrayList;
 public class Controller {
 
 	UserManager userManager;
+	User user;
 
 	Controller()
 	{
@@ -22,7 +23,7 @@ public class Controller {
     public String signUp(@RequestParam String name,@RequestParam String email,@RequestParam String password)
 	{
 		ArrayList<Mail> mail = new ArrayList<Mail>(10);
-		User user = new User(name,email,password,mail );
+		 user = new User(name,email,password,mail );
 		return Boolean.toString(userManager.signUp(user));
 	}
 
@@ -41,7 +42,9 @@ public class Controller {
 	@GetMapping("/inbox")
 	public String inbox(){
 
-		return "json file"; //{email,recipient, subject ,content, starred}
+
+		System.out.println( user.getFolder("inbox","subject")); //{email,recipient, subject ,content, starred}
+		return "true";
 	}
 	@GetMapping("/starred")
 	public String starred(){
