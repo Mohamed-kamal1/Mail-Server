@@ -4,12 +4,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 class User {
-    String fullname;
-
-
-    String email;
-    String password;
-    ArrayList<Mail> mail;
+    private String fullname;
+    private String email;
+    private String password;
+    private ArrayList<Mail> mail;
 
     public User(String fn, String em, String pw, ArrayList<Mail> m){
         this.fullname = fn;
