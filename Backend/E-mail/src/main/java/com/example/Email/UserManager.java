@@ -10,7 +10,8 @@ import java.util.LinkedList;
 import java.util.Queue;
 
 public class UserManager {
-     String user_login="";
+    String currentUserFile;
+    User currentUser;
     ArrayList<String> userEmails; // List of emails of users in a file
 
     // _____________________ Utility functions _____________________
@@ -87,39 +88,41 @@ public class UserManager {
         }
     }
 
-    // Returns true or false to allow user's access to his account
+    // Returns true or false to allow user's access to their account, sets current user file and user object
     public boolean login(String email, String password){
         readUsers();
-        String targetID = getUserFile(email);
-        if (targetID == null) return false;
-        User test = fileToUser(targetID);
-        user_login = email;
-        return (password.equals(test.getPassword()));
+        currentUserFile = getUserFile(email);
+        if (currentUserFile == null) return false;
+        User currentUser = fileToUser(currentUserFile);
+        return (password.equals(currentUser.getPassword()));
     }
 
-    //Send mail to all receivers, and put it in the sent and inbox folders in the sender object
-    public void processMail(Mail m){
+    // Adds sent mail to current user's sent and inbox and the inbox of all receivers
+    public boolean processMail(Mail m){
         readUsers();
         // Put receivers' email array in a queue
-        Queue<String> queue = new LinkedList<>(Arrays.asList(m.getReceivers()));
-        m.setSender(user_login);
-
-        // Open the sender's file and parse to User object
-        String senderFile = this.getUserFile(m.getSender());
-        User senderUser = this.fileToUser(senderFile);
+        Queue<String> queue = new LinkedList<>();
+        for(String email : m.getReceivers()){
+            String filename = getUserFile(email);
+            if (filename != null)
+                queue.add(filename);
+            else
+                return false;
+        }
+        m.setSender(currentUser.getEmail());
         // ID and add mail to sent and inbox folders in the sender's User object
-        m.ID.setSenderID(senderFile.replace(".json",""));
-        m.ID.setSenderIndex(senderUser.nextMailID());
+        m.ID.setSenderID(currentUserFile.replace(".json",""));
+        m.ID.setSenderIndex(currentUser.nextMailID());
         m.ID.setReceiverID(this.getUserFile(m.getReceivers()[0]).replace(".json",""));
         m.ID.setReceiverIndex("");
-        senderUser.sendMail(m);
+        currentUser.sendMail(m);
         // Rewrite the sender's file
-        this.userToFile(senderUser, senderFile);
+        this.userToFile(currentUser, currentUserFile);
 
         // Process queue of receivers
         while(!queue.isEmpty()){
             // Open file of each receiver and parse to User object
-            String receiverFile = this.getUserFile(queue.remove());
+            String receiverFile = queue.remove();
             User recUser = this.fileToUser(receiverFile);
             // ID and add mail to inbox in the receiver's User object
             m.ID.setReceiverID(receiverFile.replace(".json",""));
@@ -128,6 +131,21 @@ public class UserManager {
             // Rewrite the receiver's file
             this.userToFile(recUser,receiverFile);
         }
+        return true;
+    }
+
+    // Gets a mail's ID and adds/removes from starred folder
+    public void starEmail(EmailID id){
+        Mail target = currentUser.getMailAt(Integer.parseInt(id.getSenderIndex()));
+        target.toggleStarred();
+        userToFile(currentUser,currentUserFile);
+    }
+
+    // Gets a mail's ID and adds/removes from trash folder
+    public void trashEmail(EmailID id){
+        Mail target = currentUser.getMailAt(Integer.parseInt(id.getSenderIndex()));
+        target.toggleTrash();
+        userToFile(currentUser,currentUserFile);
     }
 
     public static void main (String[] args){
