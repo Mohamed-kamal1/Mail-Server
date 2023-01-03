@@ -153,10 +153,10 @@ public class UserManager {
         currentUser.getMailAt(indexAtCurrentUser(id)).toggleTrash();
         userToFile(currentUser,currentUserFile);
     }
-    
-    // Gets a mail's ID and deletes it permanently 
+
+    // Gets a mail's ID and deletes it hiding it from all folders
     public void deleteEmail(EmailID id){
-        currentUser.deleteMailAt(indexAtCurrentUser(id));
+        currentUser.getMailAt(indexAtCurrentUser(id)).deleteForever();
         userToFile(currentUser,currentUserFile);
     }
 
@@ -169,5 +169,23 @@ public class UserManager {
             list.add(temp);
         }
         return list;
+    }
+
+    public static void main (String[] args){
+        UserManager manager = new UserManager();
+        manager.readUsers();
+        manager.login("dave@blabla.com","something123");
+        Mail mail = new Mail(
+                "testtwo",
+                new String[]{"kamal@blabla.com"},
+                "2023/3/1, 12:30",
+                "where will this go too?",
+                new ArrayList<>()
+        );
+        manager.processMail(mail);
+        manager.login("kamal@blabla.com","password321");
+        manager.starEmail(new EmailID("0","1","2","1"));
+        ArrayList<Mail> mail1 = manager.currentUser.getFolder("starred", "date");
+        for (Mail m : mail1) System.out.println(m.getBody());
     }
 }

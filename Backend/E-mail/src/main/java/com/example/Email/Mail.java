@@ -85,5 +85,9 @@ class Mail{
         this.sent = this.inbox = true;
     }
 
+    public void deleteForever(){
+        this.draft = this.trash = this.sent = this.starred = this.inbox = false;
+    }
+
 }
 
