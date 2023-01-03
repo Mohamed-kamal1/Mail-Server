@@ -36,7 +36,7 @@ public class Controller {
 	@GetMapping("/email")
 	public String sendEmail(@RequestParam String Subject,@RequestParam String[] Recipient,@RequestParam String date,@RequestParam String Content ){
 		Mail mail= new Mail(Subject,Recipient,date,Content, new ArrayList<String>());
-
+		mail.setSender(userManager.currentUser.getEmail());
 		return Boolean.toString(userManager.processMail(mail));
 	}
 	@GetMapping("/inbox")
@@ -59,12 +59,12 @@ public class Controller {
 	@GetMapping("/draft")
 	public ArrayList<Mail> draft(){
 
-		return userManager.currentUser.getFolder("draft","subject");
+		return userManager.currentUser.getFolder("draft","date");
 	}
 	@GetMapping("/trash")
 	public ArrayList<Mail> trash(){
 
-		return userManager.currentUser.getFolder("trash","subject");
+		return userManager.currentUser.getFolder("trash","date");
 	}
 
 	@GetMapping("/totrash")
@@ -97,6 +97,15 @@ public class Controller {
 		userManager.deleteEmail(ids);
 		return "done";
 	}
+	@GetMapping("/todraft")
+	public String addToDraft(@RequestParam String Subject,@RequestParam String[] Recipient,@RequestParam String date,@RequestParam String Content ){
+		Mail mail= new Mail(Subject,Recipient,date,Content, new ArrayList<String>());
+		mail.setSender(userManager.currentUser.getEmail());
+		 Boolean.toString(userManager.processMail(mail));
+		 mail.toDraft();
+		 return "done";
+	}
+
 	@GetMapping("/addcontact")
 	public String addContact(@RequestParam String name,@RequestParam String email)
 	{

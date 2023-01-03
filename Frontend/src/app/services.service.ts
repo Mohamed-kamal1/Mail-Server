@@ -92,6 +92,20 @@ export class ServicesService {
       observe: "response"
     })
   }
+  addToDraft(Recipient: any, Subject: any, Content: any, date:string) {
+      let attachments: any = [];
+      return this.http.get(`http://localhost:8080/back/todraft`, {
+        responseType: 'text',
+        params: {
+          Subject: Subject,
+          Recipient: Recipient,
+          date: date,
+          Content: Content,
+          // attachments: attachments
+        },
+        observe: "response"
+      })
+  }
   removeFrom(folder: string,EmailID:string[]) {
     return this.http.get(`http://localhost:8080/back/from${folder}`, {
       responseType: 'text',

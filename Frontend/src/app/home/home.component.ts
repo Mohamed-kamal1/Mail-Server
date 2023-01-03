@@ -60,24 +60,18 @@ export class HomeComponent implements OnInit {
     }
     else {
       this.back();
-      if (this.isSent == 'false') {
-        alert(`The address "${this.Recipient}" in the "Recipient" field was not recognized. Please make sure that all addresses are properly formed.`);
-      }
-      else if (this.isSent == 'true') {
-        alert("Done");
-        this.click("");
-
-      }
-
     }
   }
 
   draft_message() {
     let s = String(this.email.controls.Recipient.value);
-    // this.Recipient = s.split(" ");
-    // this.Subject = String(this.email.controls.Subject.value);
-    // this.Content = String(this.email.controls.Content.value);
-    // this.add_to("draft", this.Recipient, this.Subject, this.email);
+    this.Recipient = s.split(" ");
+    this.Subject = String(this.email.controls.Subject.value);
+    this.Content = String(this.email.controls.Content.value);
+    this.servicesService.addToDraft(this.Recipient, this.Subject, this.Content, this.Date)
+      .subscribe((response) => {
+        console.log(response.body);
+      });
     this.click('');
   }
 
@@ -86,6 +80,13 @@ export class HomeComponent implements OnInit {
       .subscribe((response) => {
         this.isSent = response.body;
         console.log(this.isSent)
+        if (response.body == 'false') {
+          alert(`The address "${this.Recipient}" in the "Recipient" field was not recognized. Please make sure that all addresses are properly formed.`);
+        }
+        else if (response.body == 'true') {
+          alert("Done");
+          this.click("");
+        }
       })
   }
 
@@ -123,6 +124,7 @@ export class HomeComponent implements OnInit {
           myid = myObj[Number(value)].ID;
 
           console.log(1);
+          console.log(Mail[Number(value)].sent);
          // for (i = 0; i < Mail[Number(value)].receivers.length; i++)
             this.loadEmail(`${folder}`, myid, Mail[Number(value)].receivers[i], Mail[Number(value)].sender, Mail[Number(value)].subject, Mail[Number(value)].body, Mail[Number(value)].date, Mail[Number(value)].starred, Mail[Number(value)].sent, value);
 
