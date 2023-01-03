@@ -136,7 +136,6 @@ public class UserManager {
             m.ID.setReceiverID(receiverFile.replace(".json",""));
             m.ID.setReceiverIndex(recUser.nextMailID());
             recUser.receiveMail(m);
-
             // Rewrite the receiver's file
             this.userToFile(recUser,receiverFile);
         }
@@ -161,6 +160,13 @@ public class UserManager {
         userToFile(currentUser,currentUserFile);
     }
 
+    public void draftEmail(Mail m){
+        m.ID.setSenderID(currentUserFile.replace(".json",""));
+        m.ID.setSenderIndex(currentUser.nextMailID());
+        currentUser.draftMail(m);
+        userToFile(currentUser,currentUserFile);
+    }
+
     public ArrayList<Mail> getCustomFolder(int i){
         ArrayList<Mail> list = new ArrayList<>();
         Mail temp;
@@ -173,20 +179,18 @@ public class UserManager {
     }
 
     public static void main (String[] args){
-//        UserManager manager = new UserManager();
-//        manager.readUsers();
-//        manager.login("dave@blabla.com","something123");
-//        Mail mail = new Mail(
-//                "testtwo",
-//                new String[]{"kamal@blabla.com"},
-//                "2023/3/1, 12:30",
-//                "where will this go too?",
-//                new ArrayList<>()
-//        );
-//        manager.processMail(mail);
-//        manager.login("kamal@blabla.com","password321");
-//        manager.starEmail(new EmailID("0","1","2","1"));
-//        ArrayList<Mail> mail1 = manager.currentUser.getFolder("starred", "date");
-//        for (Mail m : mail1) System.out.println(m.getBody());
+        UserManager manager = new UserManager();
+        manager.readUsers();
+        manager.login("dave@blabla.com","something123");
+        Mail mail = new Mail(
+                "testfour",
+                new String[]{"khayri@blabla.com", "magdy@blabla.com"},
+                "2023/3/2, 12:30",
+                "where will this go for?",
+                new ArrayList<>()
+        );
+        System.out.println(manager.processMail(mail));
+        //ArrayList<Mail> mail1 = manager.currentUser.getFolder("starred", "date");
+        //for (Mail m : mail1) System.out.println(m.getBody());
     }
 }

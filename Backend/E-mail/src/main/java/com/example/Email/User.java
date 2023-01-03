@@ -36,6 +36,11 @@ class User {
         this.mail.add(m);
     }
 
+    public void draftMail(Mail m){
+        m.toDraft();
+        this.mail.add(m);
+    }
+
     // Get the next available index in the user's mail list
     public String nextMailID(){
         return String.valueOf(this.mail.size());
