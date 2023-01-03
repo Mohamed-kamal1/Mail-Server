@@ -80,7 +80,6 @@ class User {
             {for (Mail d: this.mail) {if(d.isDraft()) list.add(d);}}
         else if (target == "trash")
             {for (Mail t: this.mail) {if(t.isTrash()) list.add(t);}}
-        System.out.println(list);
         sortMailBy(list, sortBy);
         return list;
     }
