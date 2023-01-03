@@ -93,7 +93,7 @@ public class UserManager {
         readUsers();
         currentUserFile = getUserFile(email);
         if (currentUserFile == null) return false;
-        User currentUser = fileToUser(currentUserFile);
+         this.currentUser = fileToUser(currentUserFile);
         return (password.equals(currentUser.getPassword()));
     }
 

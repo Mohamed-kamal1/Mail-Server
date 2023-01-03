@@ -36,35 +36,35 @@ public class Controller {
 	@GetMapping("/email")
 	public String sendEmail(@RequestParam String Subject,@RequestParam String[] Recipient,@RequestParam String date,@RequestParam String Content ){
 		Mail mail= new Mail(Subject,Recipient,date,Content, new ArrayList<String>());
-		userManager.processMail(mail);
-		return "true or false";
+
+		return Boolean.toString(userManager.processMail(mail));
 	}
 	@GetMapping("/inbox")
-	public String inbox(){
+	public ArrayList<Mail> inbox(){
 
 
-		System.out.println( user.getFolder("inbox","subject")); //{email,recipient, subject ,content, starred}
-		return "true";
+		return userManager.currentUser.getFolder("inbox","subject"); //{email,recipient, subject ,content, starred}
+
 	}
 	@GetMapping("/starred")
-	public String starred(){
+	public ArrayList<Mail> starred(){
 
-		return "json file";
+		return userManager.currentUser.getFolder("starred","subject");
 	}
 	@GetMapping("/sent")
-	public String sent(){
+	public ArrayList<Mail> sent(){
 
-		return "json file";
+		return userManager.currentUser.getFolder("sent","subject");
 	}
 	@GetMapping("/draft")
-	public String draft(){
+	public ArrayList<Mail> draft(){
 
-		return "json file";
+		return userManager.currentUser.getFolder("draft","subject");
 	}
 	@GetMapping("/trash")
-	public String trash(){
+	public ArrayList<Mail> trash(){
 
-		return "json file";
+		return userManager.currentUser.getFolder("trash","subject");
 	}
 
 	@GetMapping("/totrash")

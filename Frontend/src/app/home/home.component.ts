@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { ObjectUnsubscribedError } from 'rxjs';
 import { ServicesService } from '../services.service';
 
 @Component({
@@ -19,10 +20,26 @@ export class HomeComponent implements OnInit {
   email: FormGroup | any;
   contact: FormGroup | any;
   isSent: any = "";
-  Recipient: String[] =[];
+  Recipient: String[] = [];
   Subject: String = "";
   Content: String = "";
-
+  Date: string = "";
+  time: string = "";
+  Mail: {
+    EmailID: string[],
+    subject: string,
+    sender: string,
+    receivers: string[],
+    date: string,
+    body: string,
+    attachments: string[],
+    inbox: boolean,
+    starred: boolean,
+    sent: boolean,
+    draft: boolean,
+    trash: boolean,
+  }[]=[];
+  mail_list!: any[];
 
   ngOnInit(): void {
     this.email = new FormGroup({
@@ -42,7 +59,15 @@ export class HomeComponent implements OnInit {
     console.log(this.Recipient);
     this.Subject = String(this.email.controls.Subject.value);
     this.Content = String(this.email.controls.Content.value);
-
+    const date = new Date();
+    var year = date.toLocaleString("default", { year: "numeric" });
+    var month = date.toLocaleString("default", { month: "2-digit" });
+    var day = date.toLocaleString("default", { day: "2-digit" });
+    var houre = date.toLocaleString("default", { hour: "numeric" });
+    var minute = date.toLocaleString("default", { minute: "numeric" });
+    var second = date.toLocaleString("default", { second: "numeric" });
+    this.Date = year + "/" + month + "/" + day;
+    this.time = houre + ":" + minute + ":" + second;
     if (s == 'null' || s.length == 0) {
       alert("Please specify recipient");
     }
@@ -70,7 +95,7 @@ export class HomeComponent implements OnInit {
   }
 
   back() {
-    this.servicesService.sendEmailServices(this.Recipient, this.Subject, this.Content)
+    this.servicesService.sendEmailServices(this.Recipient, this.Subject, this.Content, this.Date)
       .subscribe((response) => {
         this.isSent = response.body;
         console.log(this.isSent)
@@ -78,15 +103,23 @@ export class HomeComponent implements OnInit {
   }
 
   folder_back(folder: string) {
+    let i = 0;
     this.click(`${folder}`);
     document.getElementById(`${folder}`)!.innerHTML = "";
     this.servicesService.openFolderServices(folder)
       .subscribe((response) => {
-        console.log(response.body)
+        for (var value in response.body) {
+          let myObj: { [index: string]: any } = {};
+          myObj = response.body;
+          this.Mail.push(myObj[value]);
+          for (i = 0; i < this.Mail[Number(value)].receivers.length;i++ )
+          this.loadEmail(`${folder}`, this.Mail[Number(value)].receivers[i], this.Mail[Number(value)].subject, this.Mail[Number(value)].body, this.Mail[Number(value)].date, this.Mail[Number(value)].starred);
+
+
+        }
       })
 
-    for (let i = 0; i < 10; i++)
-      this.loadEmail(`${folder}`, "mohamedkamalmohamed", "subject", "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse tincidunt volutpat nibh eu elementum. ", true);
+
   }
   add_to(folder: string, Recipient: any, Subject: any, Content: any) {
     this.servicesService.addTo(folder, Recipient, Subject, Content)
@@ -195,7 +228,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  loadEmail(container: string, username: string, subject: string, Content: string, starred: boolean) {
+  loadEmail(container: string, username: string, subject: string, Content: string, date: string, starred: boolean) {
     let starredF = false;
 
 
@@ -276,11 +309,13 @@ export class HomeComponent implements OnInit {
       let header = document.createElement("div");
       message.appendChild(header);
       let Subject = document.createElement("p");
+      let Date = document.createElement("p");
       let close = document.createElement("span");
       let person = document.createElement("div");
       let contant = document.createElement("p");
       header.appendChild(Subject);
       header.appendChild(close);
+      message.appendChild(Date);
       message.appendChild(person);
       message.appendChild(contant);
       header.style.width = "100%";
@@ -299,6 +334,9 @@ export class HomeComponent implements OnInit {
       Subject.style.fontWeight = "bold";
       Subject.style.fontSize = "20px";
 
+      Date.appendChild(document.createTextNode(`${date}`));
+      Date.style.marginLeft = "30px";
+
       person.style.height = "10%";
       person.style.width = "100%";
       person.style.padding = "10px 20px";
@@ -307,7 +345,6 @@ export class HomeComponent implements OnInit {
       let name = document.createElement("p");
       person.appendChild(icon);
       person.appendChild(name);
-
       icon.className = "material-symbols-outlined";
       icon.appendChild(document.createTextNode("person"));
       icon.style.marginRight = "20px";

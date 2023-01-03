@@ -50,21 +50,14 @@ export class ServicesService {
       observe: "response"
     })
   }
-  sendEmailServices(Recipient: any, Subject: any, Content: any) {
-    // const obj: any = {
-    //   Subject: Subject,
-    //   date : "",
-    //   Recipient: Recipient,
-    //   Content: Content,
-    //   attachments:[]
-    // };
+  sendEmailServices(Recipient: any, Subject: any, Content: any,date:string) {
     let attachments: any=[] ;
     return this.http.get(`http://localhost:8080/back/email`, {
       responseType: 'text',
       params: {
         Subject: Subject,
         Recipient: Recipient,
-        date: "",
+        date: date,
         Content: Content,
        // attachments: attachments
       },
