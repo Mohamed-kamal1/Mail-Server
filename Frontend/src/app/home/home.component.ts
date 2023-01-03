@@ -25,21 +25,8 @@ export class HomeComponent implements OnInit {
   Content: String = "";
   Date: string = "";
   time: string = "";
-  Mail: {
-    EmailID: string[],
-    subject: string,
-    sender: string,
-    receivers: string[],
-    date: string,
-    body: string,
-    attachments: string[],
-    inbox: boolean,
-    starred: boolean,
-    sent: boolean,
-    draft: boolean,
-    trash: boolean,
-  }[]=[];
-  mail_list!: any[];
+
+  // mail_list!: any[];
 
   ngOnInit(): void {
     this.email = new FormGroup({
@@ -87,10 +74,10 @@ export class HomeComponent implements OnInit {
 
   draft_message() {
     let s = String(this.email.controls.Recipient.value);
-    this.Recipient = s.split(" ");
-    this.Subject = String(this.email.controls.Subject.value);
-    this.Content = String(this.email.controls.Content.value);
-    this.add_to("draft", this.Recipient, this.Subject, this.email);
+    // this.Recipient = s.split(" ");
+    // this.Subject = String(this.email.controls.Subject.value);
+    // this.Content = String(this.email.controls.Content.value);
+    // this.add_to("draft", this.Recipient, this.Subject, this.email);
     this.click('');
   }
 
@@ -104,16 +91,40 @@ export class HomeComponent implements OnInit {
 
   folder_back(folder: string) {
     let i = 0;
+    let Mail: {
+      EmailID: {
+        senderID: string,
+        senderIndex: string,
+        receiverID: string,
+        receiverIndex: string,
+      },
+      subject: string,
+      sender: string,
+      receivers: string[],
+      date: string,
+      body: string,
+      attachments: string[],
+      inbox: boolean,
+      starred: boolean,
+      sent: boolean,
+      draft: boolean,
+      trash: boolean,
+    }[] = [];
     this.click(`${folder}`);
+    console.log(2);
     document.getElementById(`${folder}`)!.innerHTML = "";
     this.servicesService.openFolderServices(folder)
       .subscribe((response) => {
         for (var value in response.body) {
           let myObj: { [index: string]: any } = {};
           myObj = response.body;
-          this.Mail.push(myObj[value]);
-          for (i = 0; i < this.Mail[Number(value)].receivers.length;i++ )
-          this.loadEmail(`${folder}`, this.Mail[Number(value)].receivers[i], this.Mail[Number(value)].subject, this.Mail[Number(value)].body, this.Mail[Number(value)].date, this.Mail[Number(value)].starred);
+          Mail.push(myObj[value]);
+          let myid: { [index: string]: any } = {};
+          myid = myObj[Number(value)].ID;
+
+          console.log(1);
+         // for (i = 0; i < Mail[Number(value)].receivers.length; i++)
+            this.loadEmail(`${folder}`, myid, Mail[Number(value)].receivers[i], Mail[Number(value)].sender, Mail[Number(value)].subject, Mail[Number(value)].body, Mail[Number(value)].date, Mail[Number(value)].starred, Mail[Number(value)].sent, value);
 
 
         }
@@ -121,20 +132,20 @@ export class HomeComponent implements OnInit {
 
 
   }
-  add_to(folder: string, Recipient: any, Subject: any, Content: any) {
-    this.servicesService.addTo(folder, Recipient, Subject, Content)
+  add_to(folder: string, EmailID: string[]) {
+    this.servicesService.addTo(folder, EmailID)
       .subscribe((Response) => {
         console.log(Response.body);
       });
   }
-  remove_from(folder: string, Recipient: any, Subject: any, Content: any) {
-    this.servicesService.removeFrom(folder, Recipient, Subject, Content)
+  remove_from(folder: string, EmailID:string[]) {
+    this.servicesService.removeFrom(folder,EmailID)
       .subscribe((Response) => {
         console.log(Response.body);
       });
   }
-  delete_forever(Recipient: any, Subject: any, Content: any) {
-    this.servicesService.delete_forever(Recipient, Subject, Content)
+  delete_forever(Recipient: any,EmailID:string[]) {
+    this.servicesService.delete_forever(Recipient,EmailID)
       .subscribe((Response) => {
         console.log(Response.body);
       });
@@ -228,9 +239,14 @@ export class HomeComponent implements OnInit {
 
   }
 
-  loadEmail(container: string, username: string, subject: string, Content: string, date: string, starred: boolean) {
+  loadEmail(container: string, EmailID: any, username: string, sender: string, subject: string, Content: string, date: string, starred: boolean, sent: boolean, value: any) {
     let starredF = false;
 
+    let ids: string[] = [];
+    ids[0] = EmailID.senderID;
+    ids[1] = EmailID.senderIndex;
+    ids[2] = EmailID.receiverID;
+    ids[3] = EmailID.receiverIndex;
 
     let body = document.getElementById(`${container}`)!;
 
@@ -263,7 +279,7 @@ export class HomeComponent implements OnInit {
       if (starredF) {
         star.style.color = "black";
         starredF = !starredF;
-        this.remove_from("starred", username, subject, Content);
+        this.remove_from("starred", ids);
         if (container == "starred") {
           email_content.style.display = "none";
         }
@@ -272,14 +288,21 @@ export class HomeComponent implements OnInit {
       else {
         star.style.color = "yellow";
         starredF = !starredF;
-        this.add_to("starred", username, subject, Content);
+        console.log(typeof EmailID);
+        this.add_to("starred", ids);
       }
 
     });
 
     let user = document.createElement("p");
     user.className = "user";
-    let myText1 = document.createTextNode(`${username}`);
+    let myText1;
+    if (sent) {
+      myText1 = document.createTextNode(`${username}`);
+    }
+    else {
+      myText1 = document.createTextNode(`${sender}`);
+    }
     user.appendChild(myText1);
     user.style.maxWidth = "15%";
     user.style.overflow = "hidden";
@@ -348,7 +371,14 @@ export class HomeComponent implements OnInit {
       icon.className = "material-symbols-outlined";
       icon.appendChild(document.createTextNode("person"));
       icon.style.marginRight = "20px";
-      name.appendChild(document.createTextNode(`${username}`));
+      if (sent) {
+
+        name.appendChild(document.createTextNode(`${username}`));
+      }
+      else {
+        name.appendChild(document.createTextNode(`${sender}`));
+
+      }
 
       contant.style.height = "70%";
       contant.style.width = "100%";
@@ -366,8 +396,8 @@ export class HomeComponent implements OnInit {
     trash.style.marginLeft = "10px";
     trash.addEventListener("click", () => {
       email_content.style.display = "none";
-      if (container == "trash") this.remove_from("trash", user, subject, Content);
-      else this.add_to("trash", user, subject, Content);
+      if (container == "trash") this.remove_from("trash",ids);
+      else this.add_to("trash",ids);
     });
 
 
@@ -392,7 +422,7 @@ export class HomeComponent implements OnInit {
       delete_forever.style.marginLeft = "10px";
       delete_forever.addEventListener("click", () => {
         email_content.style.display = "none";
-        this.delete_forever(user, subject, Content);
+        this.delete_forever(user, ids);
 
       })
       email_content.appendChild(delete_forever);

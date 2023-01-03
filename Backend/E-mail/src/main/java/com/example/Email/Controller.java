@@ -43,18 +43,18 @@ public class Controller {
 	public ArrayList<Mail> inbox(){
 
 
-		return userManager.currentUser.getFolder("inbox","subject"); //{email,recipient, subject ,content, starred}
+		return userManager.currentUser.getFolder("inbox","date"); //{email,recipient, subject ,content, starred}
 
 	}
 	@GetMapping("/starred")
 	public ArrayList<Mail> starred(){
 
-		return userManager.currentUser.getFolder("starred","subject");
+		return userManager.currentUser.getFolder("starred","date");
 	}
 	@GetMapping("/sent")
 	public ArrayList<Mail> sent(){
 
-		return userManager.currentUser.getFolder("sent","subject");
+		return userManager.currentUser.getFolder("sent","date");
 	}
 	@GetMapping("/draft")
 	public ArrayList<Mail> draft(){
@@ -68,23 +68,33 @@ public class Controller {
 	}
 
 	@GetMapping("/totrash")
-	public String addToTrash(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+	public String addToTrash(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
+		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
+		userManager.trashEmail(ids);
 		return "done";
 	}
 	@GetMapping("/fromtrash")
-	public String removeFromTrash(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+	public String removeFromTrash(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
+		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
+		userManager.trashEmail(ids);
 		return "done";
 	}
 	@GetMapping("/tostarred")
-	public String addToStarred(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+	public String addToStarred(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
+		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
+		userManager.starEmail(ids);
 		return "done";
 	}
 	@GetMapping("/fromstarred")
-	public String removeFromStarred(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+	public String removeFromStarred(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
+		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
+		userManager.starEmail(ids);
 		return "done";
 	}
 	@GetMapping("/deleteforever")
-	public String deleteForever(@RequestParam String Recipient,@RequestParam String Subject,@RequestParam String Content){
+	public String deleteForever(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
+		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
+		userManager.deleteEmail(ids);
 		return "done";
 	}
 	@GetMapping("/addcontact")

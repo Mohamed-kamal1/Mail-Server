@@ -80,35 +80,38 @@ export class ServicesService {
       observe: "response"
     })
   }
-  addTo(folder: string, Recipient: any, Subject: any, Content: any) {
+  addTo(folder:string,EmailID: string[]) {
     return this.http.get(`http://localhost:8080/back/to${folder}`, {
       responseType: 'text',
       params: {
-        Recipient: Recipient,
-        Subject: Subject,
-        Content: Content
+        sID: EmailID[0],
+        sIndex: EmailID[1],
+        rID: EmailID[2],
+        rIndex: EmailID[3],
       },
       observe: "response"
     })
   }
-  removeFrom(folder: string, Recipient: any, Subject: any, Content: any) {
+  removeFrom(folder: string,EmailID:string[]) {
     return this.http.get(`http://localhost:8080/back/from${folder}`, {
       responseType: 'text',
       params: {
-        Recipient: Recipient,
-        Subject: Subject,
-        Content: Content
+        sID: EmailID[0],
+        sIndex: EmailID[1],
+        rID: EmailID[2],
+        rIndex: EmailID[3],
       },
       observe: "response"
     })
   }
-  delete_forever(Recipient: any, Subject: any, Content: any) {
+  delete_forever(Recipient: any, EmailID:string[]) {
     return this.http.get(`http://localhost:8080/back/deleteforever`, {
       responseType: 'text',
       params: {
-        Recipient: Recipient,
-        Subject: Subject,
-        Content: Content
+        sID: EmailID[0],
+        sIndex: EmailID[1],
+        rID: EmailID[2],
+        rIndex: EmailID[3],
       },
       observe: "response"
     })

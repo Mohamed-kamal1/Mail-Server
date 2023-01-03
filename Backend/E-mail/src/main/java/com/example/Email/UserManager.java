@@ -136,6 +136,7 @@ public class UserManager {
             m.ID.setReceiverID(receiverFile.replace(".json",""));
             m.ID.setReceiverIndex(recUser.nextMailID());
             recUser.receiveMail(m);
+
             // Rewrite the receiver's file
             this.userToFile(recUser,receiverFile);
         }
@@ -172,20 +173,20 @@ public class UserManager {
     }
 
     public static void main (String[] args){
-        UserManager manager = new UserManager();
-        manager.readUsers();
-        manager.login("dave@blabla.com","something123");
-        Mail mail = new Mail(
-                "testtwo",
-                new String[]{"kamal@blabla.com"},
-                "2023/3/1, 12:30",
-                "where will this go too?",
-                new ArrayList<>()
-        );
-        manager.processMail(mail);
-        manager.login("kamal@blabla.com","password321");
-        manager.starEmail(new EmailID("0","1","2","1"));
-        ArrayList<Mail> mail1 = manager.currentUser.getFolder("starred", "date");
-        for (Mail m : mail1) System.out.println(m.getBody());
+//        UserManager manager = new UserManager();
+//        manager.readUsers();
+//        manager.login("dave@blabla.com","something123");
+//        Mail mail = new Mail(
+//                "testtwo",
+//                new String[]{"kamal@blabla.com"},
+//                "2023/3/1, 12:30",
+//                "where will this go too?",
+//                new ArrayList<>()
+//        );
+//        manager.processMail(mail);
+//        manager.login("kamal@blabla.com","password321");
+//        manager.starEmail(new EmailID("0","1","2","1"));
+//        ArrayList<Mail> mail1 = manager.currentUser.getFolder("starred", "date");
+//        for (Mail m : mail1) System.out.println(m.getBody());
     }
 }
