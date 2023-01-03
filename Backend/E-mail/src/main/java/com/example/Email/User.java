@@ -71,16 +71,16 @@ class User {
         ArrayList<Mail> list = new ArrayList<>();
 
         if (target == "inbox")
-            for (Mail i: this.mail) if(i.isInbox()) list.add(i);
+            {for (Mail i: this.mail) {if(i.isInbox()) list.add(i);}}
         else if (target == "starred")
-            for (Mail s: this.mail) if(s.isStarred()) list.add(s);
+            {for (Mail s: this.mail) {if(s.isStarred()) list.add(s);}}
         else if (target == "sent")
-            for (Mail se: this.mail) if(se.isSent()) list.add(se);
+            {for (Mail se: this.mail) {if(se.isSent()) list.add(se);}}
         else if (target == "draft")
-            for (Mail d: this.mail) if(d.isDraft()) list.add(d);
+            {for (Mail d: this.mail) {if(d.isDraft()) list.add(d);}}
         else if (target == "trash")
-            for (Mail t: this.mail) if(t.isTrash()) list.add(t);
-
+            {for (Mail t: this.mail) {if(t.isTrash()) list.add(t);}}
+        System.out.println(list);
         sortMailBy(list, sortBy);
         return list;
     }
