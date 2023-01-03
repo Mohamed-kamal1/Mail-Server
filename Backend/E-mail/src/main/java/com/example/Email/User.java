@@ -23,6 +23,7 @@ class User {
     public String getPassword() {return password;}
     public ArrayList<ArrayList<EmailID>> getCustomFolders() {return customFolders;}
     public Mail getMailAt(int i) {return this.mail.get(i);}
+    public void deleteMailAt(int i) {this.mail.remove(i);}
 
     // Add mail to user's mail list as a received mail
     public void receiveMail(Mail m){
