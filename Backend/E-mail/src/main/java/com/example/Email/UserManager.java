@@ -153,6 +153,12 @@ public class UserManager {
         currentUser.getMailAt(indexAtCurrentUser(id)).toggleTrash();
         userToFile(currentUser,currentUserFile);
     }
+    
+    // Gets a mail's ID and deletes it permanently 
+    public void deleteEmail(EmailID id){
+        currentUser.deleteMailAt(indexAtCurrentUser(id));
+        userToFile(currentUser,currentUserFile);
+    }
 
     public ArrayList<Mail> getCustomFolder(int i){
         ArrayList<Mail> list = new ArrayList<>();
