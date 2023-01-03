@@ -18,7 +18,7 @@ class Mail{
 
     public Mail(String s,  String[] rec, String d, String b, ArrayList<String> a){
         this.subject = s;
-       // this.sender = send;
+        // this.sender = send;
         this.receivers = rec;
         this.date = d;
         this.body = b;
@@ -30,7 +30,7 @@ class Mail{
     }
 
     public void setSender(String sender){
-        this.sender=sender;
+        this.sender = sender;
     }
     // Getters
     public String getSubject() {return subject;}
@@ -74,17 +74,16 @@ class Mail{
 
     // Add to inbox upon receiving
     public void toInbox(){
-        this.sent = false;
+        this.draft = this.starred = this.sent = this.trash = false;
         this.inbox = true;
     }
 
     // Add to sent and inbox folders upon sending
     public void toSentAndInbox(){
         if (this.draft) this.draft = false;
-        this.sent = true;
-        this.inbox = true;
+        this.draft = this.starred = this.trash = false;
+        this.sent = this.inbox = true;
     }
 
 }
-
 
