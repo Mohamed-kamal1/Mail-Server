@@ -8,21 +8,21 @@ class User {
     private String email;
     private String password;
     private ArrayList<Mail> mail;
+    private ArrayList<ArrayList<EmailID>> customFolders;
 
     public User(String fn, String em, String pw, ArrayList<Mail> m){
         this.fullname = fn;
         this.email = em;
         this.password = pw;
         this.mail = m;
+        this.customFolders = new ArrayList<>();
     }
 
     public String getFullname() {return fullname;}
     public String getEmail() {return email;}
     public String getPassword() {return password;}
-
-    public Mail getMailAt(int i){
-        return this.mail.get(i);
-    }
+    public ArrayList<ArrayList<EmailID>> getCustomFolders() {return customFolders;}
+    public Mail getMailAt(int i) {return this.mail.get(i);}
 
     // Add mail to user's mail list as a received mail
     public void receiveMail(Mail m){
@@ -41,6 +41,16 @@ class User {
         return String.valueOf(this.mail.size());
     }
 
+    // Add a new list to the custom folders list ----- CALL USERTOFILE AFTER CALL TO SAVE JSON CHANGES
+    public void addFolder(){
+        this.customFolders.add(new ArrayList<>());
+    }
+
+    // add email by ID to a folder ----- CALL USERTOFILE AFTER CALL TO SAVE CHANGES
+    public void toFolder(EmailID id, int i){
+        this.customFolders.get(i).add(id);
+    }
+
     // Sort a mail list by some attribute
     public static void sortMailBy(ArrayList<Mail> mail, String field){
         if (field == "subject")
@@ -57,7 +67,7 @@ class User {
 
     // Get some folder and sort it by some attribute
     public ArrayList<Mail> getFolder(String target, String sortBy){
-        ArrayList<Mail> list = new ArrayList();
+        ArrayList<Mail> list = new ArrayList<>();
 
         if (target == "inbox")
             for (Mail i: this.mail) if(i.isInbox()) list.add(i);

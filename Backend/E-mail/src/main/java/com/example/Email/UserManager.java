@@ -3,9 +3,8 @@ import com.google.gson.Gson;
 import java.io.*;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
-import java.nio.Buffer;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
 
@@ -46,6 +45,15 @@ public class UserManager {
         }catch (Exception e){
             throw new RuntimeException(e);
         }
+    }
+
+    // Returns the index of an email in the current user's mail list
+    public int indexAtCurrentUser(EmailID id){
+        // Check if the current user is the sender or receiver then use the appropriate index
+        if (id.getSenderID().equals(currentUserFile.replace(".json","")))
+            return Integer.parseInt(id.getSenderIndex());
+        else
+            return Integer.parseInt(id.getReceiverIndex());
     }
 
     // __________________ End of utility functions __________________
@@ -93,7 +101,7 @@ public class UserManager {
         readUsers();
         currentUserFile = getUserFile(email);
         if (currentUserFile == null) return false;
-         this.currentUser = fileToUser(currentUserFile);
+        User currentUser = fileToUser(currentUserFile);
         return (password.equals(currentUser.getPassword()));
     }
 
@@ -136,41 +144,24 @@ public class UserManager {
 
     // Gets a mail's ID and adds/removes from starred folder
     public void starEmail(EmailID id){
-        Mail target = currentUser.getMailAt(Integer.parseInt(id.getSenderIndex()));
-        target.toggleStarred();
+        currentUser.getMailAt(indexAtCurrentUser(id)).toggleStarred();
         userToFile(currentUser,currentUserFile);
     }
 
     // Gets a mail's ID and adds/removes from trash folder
     public void trashEmail(EmailID id){
-        Mail target = currentUser.getMailAt(Integer.parseInt(id.getSenderIndex()));
-        target.toggleTrash();
+        currentUser.getMailAt(indexAtCurrentUser(id)).toggleTrash();
         userToFile(currentUser,currentUserFile);
     }
 
-    public static void main (String[] args){
-        UserManager manager = new UserManager();
-        manager.readUsers();
-
-        // Test for sending mail to multiple receivers
-        /*Mail testMail = new Mail(
-                "This Is A Test",
-                "dave@blabla.com",
-                new String[]{"kamal@blabla.com", "khayri@blabla.com", "magdy@blabla.com"},
-                "2023/2/1, 13:34",
-                "I really really hope this works",
-                new ArrayList<String>()
-        );
-        manager.processMail(testMail);*/
-
-        // Test for signing up a new user
-        /*User testUser = new User(
-                "Alan Turing",
-                "turing@blabla.com",
-                "computersarecool",
-                new ArrayList<Mail>()
-        );
-
-        System.out.println(manager.signUp(testUser));*/
+    public ArrayList<Mail> getCustomFolder(int i){
+        ArrayList<Mail> list = new ArrayList<>();
+        Mail temp;
+        for(EmailID id: currentUser.getCustomFolders().get(i)) {
+            temp = currentUser.getMailAt(indexAtCurrentUser(id));
+            if (temp.isTrash()) continue;
+            list.add(temp);
+        }
+        return list;
     }
 }
