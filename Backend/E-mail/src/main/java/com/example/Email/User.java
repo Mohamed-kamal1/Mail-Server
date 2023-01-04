@@ -85,6 +85,12 @@ class User {
             {for (Mail d: this.mail) {if(d.isDraft()) list.add(d);}}
         else if (target == "trash")
             {for (Mail t: this.mail) {if(t.isTrash()) list.add(t);}}
+        else{ // Custom folder
+            UserManager manager = new UserManager();
+            ArrayList<EmailID> custom = this.customFolders.get(Integer.parseInt(target));
+            for(EmailID id: custom)
+                list.add(this.mail.get(manager.indexAtCurrentUser(id)));
+        }
         sortMailBy(list, sortBy);
         return list;
     }
