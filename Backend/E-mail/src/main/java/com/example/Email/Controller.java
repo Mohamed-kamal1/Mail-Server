@@ -37,61 +37,22 @@ public class Controller {
 	public String sendEmail(@RequestParam String Subject,@RequestParam String[] Recipient,@RequestParam String date,@RequestParam String Content ){
 		Mail mail= new Mail(Subject,Recipient,date,Content, new ArrayList<String>());
 		mail.setSender(userManager.currentUser.getEmail());
-		return Boolean.toString(userManager.processMail(mail));
+		    boolean flage= userManager.processMail(mail);
+		    mail.setSent(true);
+			System.out.println(mail.isSent());
+		return Boolean.toString(flage);
 	}
-	@GetMapping("/inbox")
-	public ArrayList<Mail> inbox(@RequestParam String sortby){
-
-
-		return userManager.currentUser.getFolder("inbox",sortby); //{email,recipient, subject ,content, starred}
+	@GetMapping("/openfolder")
+	public ArrayList<Mail> openFolder(@RequestParam String folder, @RequestParam String sortby){
+		return userManager.currentUser.getFolder(folder,sortby); //{email,recipient, subject ,content, starred}
 
 	}
-	@GetMapping("/starred")
-	public ArrayList<Mail> starred(@RequestParam String sortby){
-
-		return userManager.currentUser.getFolder("starred",sortby);
-	}
-	@GetMapping("/sent")
-	public ArrayList<Mail> sent(@RequestParam String sortby){
-		System.out.println(sortby);
-		ArrayList<Mail>m = userManager.currentUser.getFolder("sent",sortby);
-		for(int i=0;i<m.size();i++)
-		System.out.println(m.get(i).getSubject());
-		return userManager.currentUser.getFolder("sent",sortby);
-	}
-	@GetMapping("/draft")
-	public ArrayList<Mail> draft(@RequestParam String sortby){
-
-		return userManager.currentUser.getFolder("draft",sortby);
-	}
-	@GetMapping("/trash")
-	public ArrayList<Mail> trash(@RequestParam String sortby){
-
-		return userManager.currentUser.getFolder("trash",sortby);
-	}
-
-	@GetMapping("/totrash")
-	public String addToTrash(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
+	@GetMapping("/addRemove")
+	public String add_remove(@RequestParam String folder, @RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
 		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
+		if(folder.equals("trash"))
 		userManager.trashEmail(ids);
-		return "done";
-	}
-	@GetMapping("/fromtrash")
-	public String removeFromTrash(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
-		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
-		userManager.trashEmail(ids);
-		return "done";
-	}
-	@GetMapping("/tostarred")
-	public String addToStarred(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
-		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
-		userManager.starEmail(ids);
-		return "done";
-	}
-	@GetMapping("/fromstarred")
-	public String removeFromStarred(@RequestParam String sID,@RequestParam String sIndex,@RequestParam String rID,@RequestParam String rIndex){
-		EmailID ids = new EmailID(sID,sIndex,rID,rIndex) ;
-		userManager.starEmail(ids);
+		else userManager.starEmail(ids);
 		return "done";
 	}
 	@GetMapping("/deleteforever")
@@ -110,12 +71,12 @@ public class Controller {
 	}
 
 	@GetMapping("/addcontact")
-	public String addContact(@RequestParam String name,@RequestParam String email)
+	public String addContact(@RequestParam String name,@RequestParam String[] emails)
 	{
 		return "done";
 	}
 	@GetMapping("/deletecontact")
-	public String deleteContact(@RequestParam String name,@RequestParam String email)
+	public String deleteContact(@RequestParam String name,@RequestParam String[] emails)
 	{
 		return "done";
 	}

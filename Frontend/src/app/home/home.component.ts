@@ -27,7 +27,7 @@ export class HomeComponent implements OnInit {
   Date: string = "";
   time: string = "";
   current_folder: string="";
-  // mail_list!: any[];
+  inboxsort = "date";
 
   ngOnInit(): void {
     this.email = new FormGroup({
@@ -135,14 +135,8 @@ export class HomeComponent implements OnInit {
 
 
   }
-  add_to(folder: string, EmailID: string[]) {
-    this.servicesService.addTo(folder, EmailID)
-      .subscribe((Response) => {
-        console.log(Response.body);
-      });
-  }
-  remove_from(folder: string, EmailID:string[]) {
-    this.servicesService.removeFrom(folder,EmailID)
+  add_remove(folder: string, EmailID: string[]) {
+    this.servicesService.add_remove(folder, EmailID)
       .subscribe((Response) => {
         console.log(Response.body);
       });
@@ -165,7 +159,9 @@ export class HomeComponent implements OnInit {
   add_contact() {
     let name = this.contact.controls.name.value;
     let email = this.contact.controls.email.value;
-    this.servicesService.addContect(name, email)
+    let emails = email.split(' ');
+    console.log(emails);
+    this.servicesService.addContect(name, emails)
       .subscribe((Response) => {
         console.log(Response.body);
       });
@@ -297,7 +293,7 @@ export class HomeComponent implements OnInit {
       if (starredF) {
         star.style.color = "black";
         starredF = !starredF;
-        this.remove_from("starred", ids);
+        this.add_remove("starred", ids);////////////////////
         if (container == "starred") {
           email_content.style.display = "none";
         }
@@ -307,7 +303,7 @@ export class HomeComponent implements OnInit {
         star.style.color = "yellow";
         starredF = !starredF;
         console.log(typeof EmailID);
-        this.add_to("starred", ids);
+        this.add_remove("starred", ids);//////////////////
       }
 
     });
@@ -414,8 +410,8 @@ export class HomeComponent implements OnInit {
     trash.style.marginLeft = "10px";
     trash.addEventListener("click", () => {
       email_content.style.display = "none";
-      if (container == "trash") this.remove_from("trash",ids);
-      else this.add_to("trash",ids);
+      if (container == "trash") this.add_remove("trash",ids);////////////////
+      else this.add_remove("trash",ids);/////////////////
     });
 
 
@@ -447,7 +443,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  loadContact(Fname: string, Lname: string, email: string) {
+  loadContact(Fname: string, Lname: string, email: any) {
     let click = false;
     let contacts = document.getElementById("contacts_body")!;
     let contant_body = document.createElement("div");

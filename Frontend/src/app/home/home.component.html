@@ -111,7 +111,7 @@
         <span id="add" (click)="addContact()">+</span>
         <form  [formGroup]="contact" id="add_body" >
           <input formControlName="name" type="text" placeholder="Name" required>
-          <input formControlName="email" type="email" placeholder="Email" required>
+          <input formControlName="email" type="email" placeholder="Email/s" required>
           <button class="btn" (click)="add_contact()">Save</button>
           <button class="btn " style="background-color: rgb(223, 24, 24);"  (click)="cancel()">Cancel</button>
         </form>

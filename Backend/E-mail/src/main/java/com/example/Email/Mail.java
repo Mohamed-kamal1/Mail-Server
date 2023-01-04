@@ -32,6 +32,9 @@ class Mail{
     public void setSender(String sender){
         this.sender = sender;
     }
+    public void setSent(boolean sent){
+        this.sent = sent;
+    }
     // Getters
     public String getSubject() {return subject;}
     public String getSender() {return sender;}

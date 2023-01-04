@@ -29,12 +29,12 @@ export class ServicesService {
       observe: "response"
     })
   }
-  addContect(name: any, Email: any) {
+  addContect(name: any, Emails: any) {
     return this.http.get('http://localhost:8080/back/addcontact', {
       responseType: 'text',
       params: {
         name: name,
-        email: Email,
+        emails: Emails,
       },
       observe: "response"
     })
@@ -65,9 +65,10 @@ export class ServicesService {
     })
   }
   openFolderServices(folder: string,sortby:string) {
-    return this.http.get(`http://localhost:8080/back/${folder}`, {
+    return this.http.get(`http://localhost:8080/back/openfolder`, {
       responseType: 'json',
       params: {
+        folder:folder,
         sortby: sortby
       },
       observe: "response"
@@ -81,10 +82,12 @@ export class ServicesService {
       observe: "response"
     })
   }
-  addTo(folder:string,EmailID: string[]) {
-    return this.http.get(`http://localhost:8080/back/to${folder}`, {
+
+  add_remove(folder:string,EmailID: string[]) {
+    return this.http.get(`http://localhost:8080/back/addRemove`, {
       responseType: 'text',
       params: {
+        folder:folder,
         sID: EmailID[0],
         sIndex: EmailID[1],
         rID: EmailID[2],
@@ -93,6 +96,7 @@ export class ServicesService {
       observe: "response"
     })
   }
+
   addToDraft(Recipient: any, Subject: any, Content: any, date:string) {
       let attachments: any = [];
       return this.http.get(`http://localhost:8080/back/todraft`, {
@@ -106,18 +110,6 @@ export class ServicesService {
         },
         observe: "response"
       })
-  }
-  removeFrom(folder: string,EmailID:string[]) {
-    return this.http.get(`http://localhost:8080/back/from${folder}`, {
-      responseType: 'text',
-      params: {
-        sID: EmailID[0],
-        sIndex: EmailID[1],
-        rID: EmailID[2],
-        rIndex: EmailID[3],
-      },
-      observe: "response"
-    })
   }
   delete_forever(Recipient: any, EmailID:string[]) {
     return this.http.get(`http://localhost:8080/back/deleteforever`, {
