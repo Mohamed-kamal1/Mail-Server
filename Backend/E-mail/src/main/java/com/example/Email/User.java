@@ -75,16 +75,16 @@ class User {
     public ArrayList<Mail> getFolder(String target, String sortBy){
         ArrayList<Mail> list = new ArrayList<>();
 
-        if (target == "inbox")
-            {for (Mail i: this.mail) {if(i.isInbox()) list.add(i);}}
-        else if (target == "starred")
-            {for (Mail s: this.mail) {if(s.isStarred()) list.add(s);}}
-        else if (target == "sent")
-            {for (Mail se: this.mail) {if(se.isSent()) list.add(se);}}
-        else if (target == "draft")
-            {for (Mail d: this.mail) {if(d.isDraft()) list.add(d);}}
-        else if (target == "trash")
-            {for (Mail t: this.mail) {if(t.isTrash()) list.add(t);}}
+        if (target.equals("inbox"))
+        {for (Mail i: this.mail) {if(i.isInbox()) list.add(i);}}
+        else if (target.equals("starred"))
+        {for (Mail s: this.mail) {if(s.isStarred()) list.add(s);}}
+        else if (target.equals("sent"))
+        {for (Mail se: this.mail) {if(se.isSent()) list.add(se);}}
+        else if (target.equals("draft"))
+        {for (Mail d: this.mail) {if(d.isDraft()) list.add(d);}}
+        else if (target.equals("trash"))
+        {for (Mail t: this.mail) {if(t.isTrash()) list.add(t);}}
         else{ // Custom folder
             UserManager manager = new UserManager();
             ArrayList<EmailID> custom = this.customFolders.get(Integer.parseInt(target));
