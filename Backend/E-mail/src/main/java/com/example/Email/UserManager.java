@@ -60,16 +60,18 @@ public class UserManager {
 
 
     // Called to load user emails from the users file at the beginning of every usage
-    public void readUsers(){
+    public boolean readUsers(){
         Gson gson = new Gson();
         try {
             BufferedReader reader = new BufferedReader(new FileReader("users.json"));
             Type usersListType = new TypeToken<ArrayList<String>>(){}.getType();
             userEmails = gson.fromJson(reader, usersListType);
+            if (userEmails.size()==0) return false;
             reader.close();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        return true;
     }
 
     // Registers a new user, returns false if the user is already registered,
@@ -117,6 +119,7 @@ public class UserManager {
             else
                 return false;
         }
+
         m.setSender(currentUser.getEmail());
         // ID and add mail to sent and inbox folders in the sender's User object
         m.ID.setSenderID(currentUserFile.replace(".json",""));
@@ -180,17 +183,16 @@ public class UserManager {
 
     public static void main (String[] args){
         UserManager manager = new UserManager();
-        manager.readUsers();
+        System.out.println(manager.readUsers());
         manager.login("dave@blabla.com","something123");
-        Mail mail = new Mail(
+        /*Mail mail = new Mail(
                 "testfour",
                 new String[]{"khayri@blabla.com", "magdy@blabla.com"},
                 "2023/3/2, 12:30",
                 "where will this go for?",
                 new ArrayList<>()
-        );
-        System.out.println(manager.processMail(mail));
-        //ArrayList<Mail> mail1 = manager.currentUser.getFolder("starred", "date");
-        //for (Mail m : mail1) System.out.println(m.getBody());
+        );*/
+        ArrayList<Mail> mail1 = manager.currentUser.getFolder("sent", "date");
+        for (Mail m : mail1) System.out.println(m.getSubject());
     }
 }
