@@ -64,10 +64,11 @@ export class ServicesService {
       observe: "response"
     })
   }
-  openFolderServices(folder: string) {
+  openFolderServices(folder: string,sortby:string) {
     return this.http.get(`http://localhost:8080/back/${folder}`, {
       responseType: 'json',
       params: {
+        sortby: sortby
       },
       observe: "response"
     })

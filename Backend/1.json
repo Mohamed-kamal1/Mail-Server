@@ -1,6 +1,1 @@
-{
-  "fullname": "Abdelrahman Khayri",
-  "email": "khayri@blabla.com",
-  "password": "somethingElse12",
-  "mail": []
-}
+{"fullname":"Abdelrahman Khayri","email":"khayri@blabla.com","password":"somethingElse12","mail":[{"ID":{"senderID":"0","senderIndex":"19","receiverID":"1","receiverIndex":"0"},"subject":"testfour","sender":"dave@blabla.com","receivers":["khayri@blabla.com","magdy@blabla.com"],"date":"2023/3/2, 12:30","body":"where will this go for?","attachments":[],"importance":0,"inbox":true,"starred":false,"sent":false,"draft":false,"trash":false}]}

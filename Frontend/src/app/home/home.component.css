@@ -71,6 +71,38 @@
   background-color: transparent;
 }
 
+.header_middle ul {
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #eee;
+  position: absolute;
+  right: 20%;
+  top: 20%;
+  min-width: 150px;
+  display: none;
+  z-index: 100;
+  border-radius: 5%;
+
+}
+
+.header_middle ul li span {
+  display: block;
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  transition: 0.5s;
+  background-color: #eee;
+}
+
+.header_middle ul li span:hover {
+  padding-left: 25px;
+}
+
+.header_middle div ul li span:not(:last-child) {
+  border-bottom: 1px solid #ddd;
+}
 .header_right {
   display: flex;
   padding-right: 20px;

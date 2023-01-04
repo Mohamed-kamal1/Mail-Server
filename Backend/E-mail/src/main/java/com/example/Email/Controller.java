@@ -40,31 +40,34 @@ public class Controller {
 		return Boolean.toString(userManager.processMail(mail));
 	}
 	@GetMapping("/inbox")
-	public ArrayList<Mail> inbox(){
+	public ArrayList<Mail> inbox(@RequestParam String sortby){
 
 
-		return userManager.currentUser.getFolder("inbox","date"); //{email,recipient, subject ,content, starred}
+		return userManager.currentUser.getFolder("inbox",sortby); //{email,recipient, subject ,content, starred}
 
 	}
 	@GetMapping("/starred")
-	public ArrayList<Mail> starred(){
+	public ArrayList<Mail> starred(@RequestParam String sortby){
 
-		return userManager.currentUser.getFolder("starred","date");
+		return userManager.currentUser.getFolder("starred",sortby);
 	}
 	@GetMapping("/sent")
-	public ArrayList<Mail> sent(){
-
-		return userManager.currentUser.getFolder("sent","date");
+	public ArrayList<Mail> sent(@RequestParam String sortby){
+		System.out.println(sortby);
+		ArrayList<Mail>m = userManager.currentUser.getFolder("sent",sortby);
+		for(int i=0;i<m.size();i++)
+		System.out.println(m.get(i).getSubject());
+		return userManager.currentUser.getFolder("sent",sortby);
 	}
 	@GetMapping("/draft")
-	public ArrayList<Mail> draft(){
+	public ArrayList<Mail> draft(@RequestParam String sortby){
 
-		return userManager.currentUser.getFolder("draft","date");
+		return userManager.currentUser.getFolder("draft",sortby);
 	}
 	@GetMapping("/trash")
-	public ArrayList<Mail> trash(){
+	public ArrayList<Mail> trash(@RequestParam String sortby){
 
-		return userManager.currentUser.getFolder("trash","date");
+		return userManager.currentUser.getFolder("trash",sortby);
 	}
 
 	@GetMapping("/totrash")
@@ -121,4 +124,5 @@ public class Controller {
 	{
 		return "Json file";//{first name,last name,email}
 	}
+
 }

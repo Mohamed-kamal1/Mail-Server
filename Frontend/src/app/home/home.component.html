@@ -12,7 +12,14 @@
     <div class="header_middle">
       <span class="material-symbols-outlined">search</span>
       <input type="text" placeholder="Search Mail" />
-      <span class="material-symbols-outlined">sort</span>
+      <span class="material-symbols-outlined" id="sort" (click)="select_sort()">sort</span>
+      <ul id="select-sort">
+        <li><span id="Date" (click)="click_sort('date')">Date</span></li>
+        <li><span id="Subject" (click)="click_sort('subject')">Subject</span></li>
+        <li><span id="Sender" (click)="click_sort('sender')">Sender</span></li>
+        <li><span id="Body"(click)="click_sort('Body')">Body</span></li>
+        <li><span id="importance" (click)="click_sort('importance')">importance</span></li>
+      </ul>
     </div>
 
     <div class="header_right">
@@ -30,11 +37,11 @@
 
       <button class="compose" (click)="click('compose')"> <span class="material-symbols-outlined"
           (click)="click('Compose')">edit</span>Compose</button>
-      <div class="sidebar_options" (click)="folder_back('inbox')">
+      <div class="sidebar_options" (click)="folder_back('inbox','date')">
         <span class="material-symbols-outlined"> all_inbox</span>
         <h3>Inbox</h3>
       </div>
-      <div class="sidebar_options" (click)="folder_back('starred')">
+      <div class="sidebar_options" (click)="folder_back('starred' ,'date')">
         <span class="material-symbols-outlined"> star</span>
         <h3>Starred</h3>
       </div>
@@ -42,15 +49,15 @@
         <span class="material-symbols-outlined"> snooze</span>
         <h3>Snoozed</h3>
       </div>
-      <div class="sidebar_options" (click)="folder_back('sent')">
+      <div class="sidebar_options" (click)="folder_back('sent','date')">
         <span class="material-symbols-outlined"> send</span>
         <h3>Sent</h3>
       </div>
-      <div class="sidebar_options" (click)="folder_back('draft')">
+      <div class="sidebar_options" (click)="folder_back('draft','date')">
         <span class="material-symbols-outlined"> draft</span>
         <h3>Drafts</h3>
       </div>
-      <div class="sidebar_options" (click)="folder_back('trash')">
+      <div class="sidebar_options" (click)="folder_back('trash','date')">
         <span class="material-symbols-outlined"> delete</span>
         <h3>Trash</h3>
       </div>
@@ -80,8 +87,6 @@
               <li><span>None</span></li>
               <li><span>Read</span></li>
               <li><span>Unread</span></li>
-
-
             </ul>
           </div>
           <span class="material-symbols-outlined"> refresh</span>

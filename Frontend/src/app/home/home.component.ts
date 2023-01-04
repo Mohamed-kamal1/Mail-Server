@@ -15,6 +15,7 @@ export class HomeComponent implements OnInit {
 
   title = 'Mail-Server';
   select = false;
+  selectSort = false;
   signOut_display = false;
 
   email: FormGroup | any;
@@ -25,7 +26,7 @@ export class HomeComponent implements OnInit {
   Content: String = "";
   Date: string = "";
   time: string = "";
-
+  current_folder: string="";
   // mail_list!: any[];
 
   ngOnInit(): void {
@@ -90,7 +91,7 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  folder_back(folder: string) {
+  folder_back(folder: string , sortby:string) {
     let i = 0;
     let Mail: {
       EmailID: {
@@ -114,7 +115,7 @@ export class HomeComponent implements OnInit {
     this.click(`${folder}`);
     console.log(2);
     document.getElementById(`${folder}`)!.innerHTML = "";
-    this.servicesService.openFolderServices(folder)
+    this.servicesService.openFolderServices(folder,sortby)
       .subscribe((response) => {
         for (var value in response.body) {
           let myObj: { [index: string]: any } = {};
@@ -123,7 +124,7 @@ export class HomeComponent implements OnInit {
           let myid: { [index: string]: any } = {};
           myid = myObj[Number(value)].ID;
 
-          console.log(1);
+          console.log(myObj);
           console.log(Mail[Number(value)].sent);
          // for (i = 0; i < Mail[Number(value)].receivers.length; i++)
             this.loadEmail(`${folder}`, myid, Mail[Number(value)].receivers[i], Mail[Number(value)].sender, Mail[Number(value)].subject, Mail[Number(value)].body, Mail[Number(value)].date, Mail[Number(value)].starred, Mail[Number(value)].sent, value);
@@ -190,8 +191,19 @@ export class HomeComponent implements OnInit {
 
     }
   }
+  select_sort() {
+    this.selectSort = !this.selectSort;
+    if (this.selectSort) {
+      document.getElementById("select-sort")!.style.display = "block";
+    }
+    else {
+      document.getElementById("select-sort")!.style.display = "none";
+
+    }
+  }
   click(click: string) {
 
+    this.current_folder = click;
     document.getElementById("inbox")!.style.zIndex = "-1";
     document.getElementById("starred")!.style.zIndex = "-1";
     document.getElementById("snoozed")!.style.zIndex = "-1";
@@ -228,6 +240,10 @@ export class HomeComponent implements OnInit {
     else if (click == "compose") {
       document.getElementById("compose")!.style.zIndex = "1";
     }
+  }
+
+  click_sort(sort: string) {
+    this.folder_back(this.current_folder, sort);
   }
 
   signOut() {
