@@ -59,7 +59,7 @@ class User {
 
     // Sort a mail list by some attribute
     public static void sortMailBy(ArrayList<Mail> mail, String field){
-        if (field == "subject")
+        if (field.equals("subject"))
             mail.sort(Comparator.comparing(Mail::getSubject));
         else if (field == "sender")
             mail.sort(Comparator.comparing(Mail::getSender));
