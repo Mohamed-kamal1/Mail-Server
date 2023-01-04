@@ -79,9 +79,14 @@ class User {
         {for (Mail i: this.mail) {if(i.isInbox()) list.add(i);}}
         else if (target.equals("starred"))
         {for (Mail s: this.mail) {if(s.isStarred()) list.add(s);}}
-        else if (target.equals("sent"))
-        {for (Mail se: this.mail) {if(se.isSent()) list.add(se);}}
-        else if (target.equals("draft"))
+        else if (target.equals("sent")) {
+            UserManager manager = new UserManager();
+            for(Mail email: this.mail){
+                if(email.ID.getSenderID().equals(manager.currentUserFile.replace(".json",""))){
+                    list.add(email);
+                }
+            }
+        }else if (target.equals("draft"))
         {for (Mail d: this.mail) {if(d.isDraft()) list.add(d);}}
         else if (target.equals("trash"))
         {for (Mail t: this.mail) {if(t.isTrash()) list.add(t);}}
