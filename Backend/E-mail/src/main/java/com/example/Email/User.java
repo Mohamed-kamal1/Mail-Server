@@ -61,13 +61,13 @@ class User {
     public static void sortMailBy(ArrayList<Mail> mail, String field){
         if (field.equals("subject"))
             mail.sort(Comparator.comparing(Mail::getSubject));
-        else if (field == "sender")
+        else if (field.equals("sender"))
             mail.sort(Comparator.comparing(Mail::getSender));
-        else if (field == "date")
+        else if (field.equals("date"))
             mail.sort(Comparator.comparing(Mail::getDate));
-        else if (field == "body")
+        else if (field.equals("body"))
             mail.sort(Comparator.comparing(Mail::getBody));
-        else if (field == "importance")
+        else if (field.equals("importance"))
             mail.sort(Comparator.comparing(Mail::getImportance));
     }
 
