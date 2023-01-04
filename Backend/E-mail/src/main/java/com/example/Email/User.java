@@ -32,7 +32,8 @@ class User {
 
     // Add mail to the user's mail list as a sent mail
     public void sendMail(Mail m){
-        m.toSentAndInbox();
+        m.toInbox();
+        m.toSent();
         this.mail.add(m);
     }
 

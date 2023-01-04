@@ -78,11 +78,10 @@ class Mail{
         this.inbox = true;
     }
 
-    // Add to sent and inbox folders upon sending
-    public void toSentAndInbox(){
+    // Add to sent folder upon sending
+    public void toSent(){
         if (this.draft) this.draft = false;
-        this.draft = this.starred = this.trash = this.inbox= false;
-        this.sent  = true;
+        this.sent = true;
     }
 
     public void deleteForever(){
