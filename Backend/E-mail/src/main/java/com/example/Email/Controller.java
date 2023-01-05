@@ -93,6 +93,7 @@ public class Controller {
 	{
 		System.out.println(emails[0]);
 		userManager.currentUser.addContact(emails, name);
+		userManager.userToFile(userManager.currentUser, userManager.currentUserFile);
 		return "done";
 	}
 
@@ -100,6 +101,7 @@ public class Controller {
 	public String deleteContact(@RequestParam String[] emails)
 	{
 		userManager.currentUser.removeContact(emails);
+		userManager.userToFile(userManager.currentUser, userManager.currentUserFile);
 		return "done";
 	}
 
