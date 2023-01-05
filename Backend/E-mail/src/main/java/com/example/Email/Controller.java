@@ -179,6 +179,11 @@ public class Controller {
 		return ResponseEntity.ok().contentType(MediaType.parseMediaType(Files.probeContentType(filePath)))
 				.headers(httpHeaders).body(resource);
 	}
+	
+	@GetMapping("/getlablecount")
+    	public int lableCount(){
+        	return userManager.currentUser.getCustomFolders().size();
+    	}
 
 }
 
