@@ -114,6 +114,7 @@ class User {
         else{ // Custom folder
             UserManager manager = new UserManager();
             manager.currentUser = this;
+            manager.currentUserFile = manager.getUserFile(this.getEmail());
             ArrayList<EmailID> custom = this.customFolders.get(Integer.parseInt(target));
             for(EmailID id: custom)
                 list.add(this.mail.get(manager.indexAtCurrentUser(id)));
