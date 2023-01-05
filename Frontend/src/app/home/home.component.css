@@ -100,7 +100,7 @@
   padding-left: 25px;
 }
 
-.header_middle div ul li span:not(:last-child) {
+.header_middle ul li:not(:last-child) {
   border-bottom: 1px solid #ddd;
 }
 .header_right {
@@ -442,7 +442,7 @@
   align-items: center;
   background-color: #dae2f2;
   margin: 0 auto;
-  /* z-index: 20; */
+  z-index: 20;
 
 }
 
@@ -509,23 +509,27 @@
 }
 
 #compose form textarea {
-  height: 69%;
+  height: 59%;
+  /* height: 6%; */
 }
 
 #compose form .footer {
+  position: absolute;
   height: 10%;
   display: flex;
+  bottom: 0;
 }
 
 #compose form .footer .footer_left {
-  width: 30%;
+  width: 80%;
   display: flex;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
   align-content: space-between
 }
 
 #compose form .footer .footer_right {
+  width: 10%;
   display: flex;
   justify-content: flex-end;
   align-items: center;
@@ -541,7 +545,51 @@
   font-size: 17px;
   justify-content: space-between;
   align-items: center;
+  margin-right: 20px;
 
+}
+/* #compose form .footer input {
+  width: 90px;
+  padding: 5px;
+  background-color: #326ce1;
+  color: white;
+  display: flex;
+  font-size: 170px;
+  justify-content: space-between;
+  align-items: center;
+
+} */
+#important {
+
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: #eee;
+  position: absolute;
+  left: 15%;
+  top: 8%;
+  min-width: 150px;
+  display: none;
+  z-index: 100;
+  border-radius: 5%;
+
+}
+
+#important li span {
+  display: block;
+  color: #333;
+  padding: 10px;
+  text-decoration: none;
+  transition: 0.5s;
+  background-color: #eee;
+}
+
+#important li span:hover {
+  padding-left: 25px;
+}
+
+#important li:not(:last-child) {
+  border-bottom: 1px solid #ddd;
 }
 
 .acount {
@@ -584,6 +632,16 @@
   background-color: white;
 }
 
+#downloads {
+  display: flex;
+
+}
+#downloads div a {
+height: 20px;
+width: 50px;
+background-color: red;
+}
+
 /* .email_content {
   display: flex;
   background-color: #326ce146;
@@ -613,3 +671,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
 } */
+

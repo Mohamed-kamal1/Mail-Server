@@ -8,7 +8,7 @@ class Mail{
     private String[] receivers;
     private String date; // date in "YYYY/MM/DD, TT:TT"
     private String body;
-    private ArrayList<String> attachments;
+    private String[] attachments;
     private int importance;
     private Boolean inbox;
     private Boolean starred;
@@ -16,7 +16,7 @@ class Mail{
     private Boolean draft;
     private Boolean trash;
 
-    public Mail(String s,  String[] rec, String d, String b, ArrayList<String> a){
+    public Mail(String s,  String[] rec, String d, String b, String[] a){
         this.subject = s;
         // this.sender = send;
         this.receivers = rec;
@@ -29,20 +29,20 @@ class Mail{
         this.ID = new EmailID("","","","");
     }
 
-    public void setSender(String sender){
-        this.sender = sender;
-    }
+    public void setSender(String sender){this.sender = sender;}
     public void setSent(boolean sent){
         this.sent = sent;
     }
+    public void setImportance(int importance) {this.importance=importance;}
+
     // Getters
     public String getSubject() {return subject;}
     public String getSender() {return sender;}
     public String[] getReceivers() {return receivers;}
     public String getDate() {return date;}
     public String getBody() {return body;}
-    public ArrayList<String> getAttachments() {return attachments;}
-    public int getImportance() {return importance;}
+    public String[] getAttachments() {return attachments;}
+    public int getImportance() {return -importance;}
     // Checkers for files
     public Boolean isInbox() {return inbox;}
     public Boolean isStarred() {return starred;}

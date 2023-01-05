@@ -53,13 +53,6 @@ export class SignUpComponent implements OnInit {
     }
     else {
       this.back();
-      if (this.isLogIn == "false") {
-        alert("this email is already associated with another account");
-      }
-      else if(this.isLogIn == "true") {
-        document.getElementById("done")!.style.display = "block";
-        document.getElementById("signUp")!.style.display = "none";
-      }
     }
   }
 
@@ -67,7 +60,15 @@ export class SignUpComponent implements OnInit {
     this.servicesService.signUpServices(this.Fname, this.Lname, this.email, this.password)
       .subscribe((response) => {
         this.isLogIn = response.body;
-        console.log(this.isLogIn)
+        console.log(this.isLogIn);
+        if (this.isLogIn == "false") {
+          alert("this email is already associated with another account");
+        }
+        else if (this.isLogIn == "true") {
+          document.getElementById("done")!.style.display = "block";
+          document.getElementById("signUp")!.style.display = "none";
+        }
+
       })
   }
 

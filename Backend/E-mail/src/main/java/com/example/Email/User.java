@@ -7,7 +7,7 @@ class User {
     private String fullname;
     private String email;
     private String password;
-    private ArrayList<String> contactEmails;
+    private ArrayList<String[]> contactEmails;
     private ArrayList<String> contactNames;
     private ArrayList<Mail> mail;
     private ArrayList<ArrayList<EmailID>> customFolders;
@@ -28,16 +28,17 @@ class User {
     public ArrayList<ArrayList<EmailID>> getCustomFolders() {return customFolders;}
     public Mail getMailAt(int i) {return this.mail.get(i);}
 
-    public ArrayList<String> getContactEmails() {return this.contactEmails;}
+    public ArrayList<String[]> getContactEmails() {return this.contactEmails;}
     public ArrayList<String> getContactNames() {return this.contactNames;}
 
-    public void addContact(String contactEmail, String contactName){
-        this.contactEmails.add(contactEmail);
+    public void addContact(String[] contactEmails, String contactName){
+        //for(int i=0;i<contactEmails.length;i++)
+          this.contactEmails.add(contactEmails);
         this.contactNames.add(contactName);
     }
 
-    public void removeContact(String email){
-        int i = this.contactEmails.indexOf(email);
+    public void removeContact(String[] emails){
+        int i = this.contactEmails.indexOf(emails);
         this.contactEmails.remove(i);
         this.contactNames.remove(i);
     }

@@ -38,12 +38,7 @@ export class SignInComponent implements OnInit {
     else {
       this.back();
 
-      if (this.isSignIn == "false") {
-        alert("wrong email or password");
-      }
-      else if (this.isSignIn == "true") {
-        this.router.navigate(['/Home']);
-      }
+
     }
   }
 
@@ -54,7 +49,15 @@ export class SignInComponent implements OnInit {
       .subscribe((response) => {
         var text = response.body
         this.isSignIn = text;
-      })
+        console.log(this.isSignIn);
+        if (this.isSignIn == "false") {
+          alert("wrong email or password");
+        }
+        else if (this.isSignIn == "true") {
+          this.router.navigate(['/Home']);
+        }
+      });
+
   }
 
 }

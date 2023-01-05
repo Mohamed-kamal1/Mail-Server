@@ -1,7 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpEvent, HttpEventType } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { ObjectUnsubscribedError } from 'rxjs';
+import { saveAs } from 'file-saver';
+
 import { ServicesService } from '../services.service';
 
 @Component({
@@ -16,6 +18,8 @@ export class HomeComponent implements OnInit {
   title = 'Mail-Server';
   select = false;
   selectSort = false;
+  selectImportant = false;
+  degreeOfImportance = 0;
   signOut_display = false;
 
   email: FormGroup | any;
@@ -26,8 +30,12 @@ export class HomeComponent implements OnInit {
   Content: String = "";
   Date: string = "";
   time: string = "";
-  current_folder: string="";
+  current_folder: string = "";
   inboxsort = "date";
+  friends =new Map();
+
+  filenames: string[] = [""];
+  fileStatus = { status: '', requestType: '', percent: 0 };
 
   ngOnInit(): void {
     this.email = new FormGroup({
@@ -77,7 +85,7 @@ export class HomeComponent implements OnInit {
   }
 
   back() {
-    this.servicesService.sendEmailServices(this.Recipient, this.Subject, this.Content, this.Date)
+    this.servicesService.sendEmailServices(this.Recipient, this.Subject, this.Content,this.filenames, this.Date,this.degreeOfImportance)
       .subscribe((response) => {
         this.isSent = response.body;
         console.log(this.isSent)
@@ -91,7 +99,7 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  folder_back(folder: string , sortby:string) {
+  folder_back(folder: string, sortby: string) {
     let i = 0;
     let Mail: {
       EmailID: {
@@ -115,7 +123,7 @@ export class HomeComponent implements OnInit {
     this.click(`${folder}`);
     console.log(2);
     document.getElementById(`${folder}`)!.innerHTML = "";
-    this.servicesService.openFolderServices(folder,sortby)
+    this.servicesService.openFolderServices(folder, sortby)
       .subscribe((response) => {
         for (var value in response.body) {
           let myObj: { [index: string]: any } = {};
@@ -126,8 +134,8 @@ export class HomeComponent implements OnInit {
 
           console.log(myObj);
           console.log(Mail[Number(value)].sent);
-         // for (i = 0; i < Mail[Number(value)].receivers.length; i++)
-            this.loadEmail(`${folder}`, myid, Mail[Number(value)].receivers[i], Mail[Number(value)].sender, Mail[Number(value)].subject, Mail[Number(value)].body, Mail[Number(value)].date, Mail[Number(value)].starred, Mail[Number(value)].sent, value);
+          // for (i = 0; i < Mail[Number(value)].receivers.length; i++)
+          this.loadEmail(`${folder}`, myid, Mail[Number(value)].receivers, Mail[Number(value)].attachments,Mail[Number(value)].sender, Mail[Number(value)].subject, Mail[Number(value)].body, Mail[Number(value)].date, Mail[Number(value)].starred, Mail[Number(value)].sent, value);
 
 
         }
@@ -141,20 +149,29 @@ export class HomeComponent implements OnInit {
         console.log(Response.body);
       });
   }
-  delete_forever(Recipient: any,EmailID:string[]) {
-    this.servicesService.delete_forever(Recipient,EmailID)
+  delete_forever(Recipient: any, EmailID: string[]) {
+    this.servicesService.delete_forever(Recipient, EmailID)
       .subscribe((Response) => {
         console.log(Response.body);
       });
   }
   contacts() {
     this.click("contacts");
+    document.getElementById('contacts_body')!.innerHTML ="";
     this.servicesService.loadContacts()
-      .subscribe((Response) => {
-        console.log(Response.body);
-      });
-    // for (let i = 0; i < 10; i++)
+      .subscribe((response) => {
+        var map = new Map<any, any>();
+        for (var value in response.body) {
+          let myObj: { [index: string]: any } = {};
+          myObj = response.body;
+          map.set(Number(value), myObj[value]);
+          this.loadContact(value, "", myObj[value]);
 
+        }
+        this.friends = map;
+        console.log(response.body)
+        console.log(this.friends)
+      });
   }
   add_contact() {
     let name = this.contact.controls.name.value;
@@ -165,12 +182,12 @@ export class HomeComponent implements OnInit {
       .subscribe((Response) => {
         console.log(Response.body);
       });
+    this.contacts();
     this.cancel();
-    this.loadContact(this.contact.controls.name.value, "", this.contact.controls.email.value);
 
   }
-  delete_contact(Fname: string, Lname: string, email: string) {
-    this.servicesService.deleteContect(Fname, Lname, email)
+  delete_contact(email: string[]) {
+    this.servicesService.deleteContect(email)
       .subscribe((Response) => {
         console.log(Response.body);
       });
@@ -194,6 +211,16 @@ export class HomeComponent implements OnInit {
     }
     else {
       document.getElementById("select-sort")!.style.display = "none";
+
+    }
+  }
+  select_importanet() {
+    this.selectImportant = !this.selectImportant;
+    if (this.selectImportant) {
+      document.getElementById("important")!.style.display = "block";
+    }
+    else {
+      document.getElementById("important")!.style.display = "none";
 
     }
   }
@@ -237,9 +264,15 @@ export class HomeComponent implements OnInit {
       document.getElementById("compose")!.style.zIndex = "1";
     }
   }
-
   click_sort(sort: string) {
     this.folder_back(this.current_folder, sort);
+  }
+  click_important(degree: string) {
+    if (degree == "notatall") this.degreeOfImportance = 0;
+    else if (degree == "slightly") this.degreeOfImportance = 1;
+    else if (degree == "fairly") this.degreeOfImportance = 2;
+    else if (degree == "very") this.degreeOfImportance = 3;
+    console.log(this.degreeOfImportance)
   }
 
   signOut() {
@@ -253,7 +286,7 @@ export class HomeComponent implements OnInit {
 
   }
 
-  loadEmail(container: string, EmailID: any, username: string, sender: string, subject: string, Content: string, date: string, starred: boolean, sent: boolean, value: any) {
+  loadEmail(container: string, EmailID: any, username: string[],attachments:string[], sender: string, subject: string, Content: string, date: string, starred: boolean, sent: boolean, value: any) {
     let starredF = false;
 
     let ids: string[] = [];
@@ -399,7 +432,20 @@ export class HomeComponent implements OnInit {
       contant.appendChild(document.createTextNode(`${Content}`));
       contant.style.padding = "20px 20px";
 
-      body.appendChild(message);
+      if (attachments.length > 0) {
+        let attach = document.createElement("div");
+        for (let filename of attachments) {
+          let link = document.createElement("a");
+          link.addEventListener("click", () => this.onDownloadFile(filename));
+          let text = document.createTextNode("download");
+          link.appendChild(text);
+          link.style.position
+          attach.appendChild(link);
+        }
+        contant.appendChild(attach);
+
+      }
+        body.appendChild(message);
 
     });
 
@@ -410,8 +456,8 @@ export class HomeComponent implements OnInit {
     trash.style.marginLeft = "10px";
     trash.addEventListener("click", () => {
       email_content.style.display = "none";
-      if (container == "trash") this.add_remove("trash",ids);////////////////
-      else this.add_remove("trash",ids);/////////////////
+      if (container == "trash") this.add_remove("trash", ids);////////////////
+      else this.add_remove("trash", ids);/////////////////
     });
 
 
@@ -443,7 +489,7 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  loadContact(Fname: string, Lname: string, email: any) {
+  loadContact(Fname: string, Lname: string, emails: any) {
     let click = false;
     let contacts = document.getElementById("contacts_body")!;
     let contant_body = document.createElement("div");
@@ -458,7 +504,7 @@ export class HomeComponent implements OnInit {
     remove.style.display = "none";
     remove.style.marginLeft = "20px";
     remove.addEventListener("click", () => {
-      this.delete_contact(Fname, Lname, email);
+      this.delete_contact(emails);
       body.style.display = "none";
     })
 
@@ -491,7 +537,11 @@ export class HomeComponent implements OnInit {
     });
 
     let mail = document.createElement("div");
-    let text = document.createTextNode(`${email}`);
+    let s = "";
+    for (let i = 0; i < emails.length; i++){
+      s = s + emails[i] + "  ";
+    }
+    let text = document.createTextNode(`${s}`);
     mail.appendChild(text);
     mail.style.display = "none";
     mail.style.padding = "0 0 10px 40px"
@@ -533,4 +583,70 @@ export class HomeComponent implements OnInit {
     document.getElementById("add_body")!.style.display = "none";
   }
 
+  onUploadFiles(event: any): void {
+    this.filenames = [];
+    let files = event.target.files;
+    console.log(files)
+    console.log(this.filenames)
+    const formData = new FormData();
+    for (const file of files) { formData.append('files', file, file.name); }
+    this.servicesService.upload(formData).subscribe(
+      event => {
+        console.log(event);
+        this.resportProgress(event);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+  }
+
+  // define a function to download files
+  onDownloadFile(filename: string): void {
+    this.servicesService.download(filename).subscribe(
+
+      event => {
+        console.log(event);
+        this.resportProgress(event);
+      },
+      (error: HttpErrorResponse) => {
+        console.log(error);
+      }
+    );
+  }
+  private resportProgress(httpEvent: HttpEvent<string[] | Blob>): void {
+    switch (httpEvent.type) {
+      case HttpEventType.UploadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Uploading... ');
+        break;
+      case HttpEventType.DownloadProgress:
+        this.updateStatus(httpEvent.loaded, httpEvent.total!, 'Downloading... ');
+        break;
+      case HttpEventType.ResponseHeader:
+        console.log('Header returned', httpEvent);
+        break;
+      case HttpEventType.Response:
+        if (httpEvent.body instanceof Array) {
+          this.fileStatus.status = 'done';
+          for (const filename of httpEvent.body) {
+            this.filenames.unshift(filename);
+          }
+        } else {
+          saveAs(new File([httpEvent.body!], httpEvent.headers.get('File-Name')!,
+            { type: `${httpEvent.headers.get('Content-Type')};charset=utf-8` }));
+
+        }
+        this.fileStatus.status = 'done';
+        break;
+      default:
+        console.log(httpEvent);
+        break;
+
+    }
+  }
+  private updateStatus(loaded: number, total: number, requestType: string): void {
+    this.fileStatus.status = 'progress';
+    this.fileStatus.requestType = requestType;
+    this.fileStatus.percent = Math.round(100 * loaded / total);
+  }
 }

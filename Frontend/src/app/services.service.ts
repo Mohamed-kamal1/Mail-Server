@@ -1,5 +1,6 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpEvent } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -39,27 +40,25 @@ export class ServicesService {
       observe: "response"
     })
   }
-  deleteContect(fname: any, lname: any, Email: any) {
+  deleteContect(Email: any) {
     return this.http.get('http://localhost:8080/back/deletecontact', {
       responseType: 'text',
       params: {
-        Fname: fname,
-        Lname: lname,
         email: Email,
       },
       observe: "response"
     })
   }
-  sendEmailServices(Recipient: any, Subject: any, Content: any,date:string) {
-    let attachments: any=[] ;
+  sendEmailServices(Recipient: any, Subject: any, Content: any,attachments:any,date:string,degreeOfImportance:any) {
     return this.http.get(`http://localhost:8080/back/email`, {
       responseType: 'text',
       params: {
         Subject: Subject,
         Recipient: Recipient,
+        attachments:attachments,
         date: date,
         Content: Content,
-       // attachments: attachments
+        degreeOfImportance: degreeOfImportance
       },
       observe: "response"
     })
@@ -122,6 +121,20 @@ export class ServicesService {
       },
       observe: "response"
     })
+  }
+
+  upload(formData: FormData): Observable<HttpEvent<string[]>> {
+    return this.http.post<string[]>(`http://localhost:8080/back/upload`, formData, {
+      reportProgress: true,
+      observe: 'events'
+    });
+  }
+  download(filename: string): Observable<HttpEvent<Blob>> {
+    return this.http.get(`http://localhost:8080/back/download/${filename}`, {
+      reportProgress: true,
+      observe: 'events',
+      responseType: 'blob'
+    });
   }
 
 }
