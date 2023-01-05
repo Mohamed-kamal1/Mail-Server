@@ -22,7 +22,6 @@ class User {
         this.contactNames = new ArrayList<>();
     }
 
-    public String getFullname() {return fullname;}
     public String getEmail() {return email;}
     public String getPassword() {return password;}
     public ArrayList<ArrayList<EmailID>> getCustomFolders() {return customFolders;}
