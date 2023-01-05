@@ -37,8 +37,8 @@ class User {
         this.contactNames.add(contactName);
     }
 
-    public void removeContact(String[] emails){
-        int i = this.contactEmails.indexOf(emails);
+    public void removeContact(String name){
+        int i = this.contactNames.indexOf(name);
         this.contactEmails.remove(i);
         this.contactNames.remove(i);
     }

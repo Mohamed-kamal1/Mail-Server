@@ -33,11 +33,11 @@
   <div class="main_body">
 
     <!-- sidebar -->
-    <div class="sidebar">
+    <div class="sidebar" id="sidebar">
 
       <button class="compose" (click)="click('compose')"> <span class="material-symbols-outlined"
           (click)="click('Compose')">edit</span>Compose</button>
-      <div class="sidebar_options" (click)="folder_back('inbox','date')">
+      <div class="sidebar_options" (click)="folder_back('inbox','date')" >
         <span class="material-symbols-outlined"> all_inbox</span>
         <h3>Inbox</h3>
       </div>
@@ -69,8 +69,8 @@
         </div>
       </div>
       <div class="lable">
-        <h3>Lables</h3>
-        <span class="material-symbols-outlined" (click)="click('lable')">add</span>
+        <h3>Labels</h3>
+        <span class="material-symbols-outlined" (click)="creat_lable()">add</span>
       </div>
 
     </div>
@@ -89,7 +89,7 @@
               <li><span>Unread</span></li>
             </ul>
           </div>
-          <span class="material-symbols-outlined"> refresh</span>
+          <span class="material-symbols-outlined" (click)="refresh()"> refresh</span>
           <span class="material-symbols-outlined">more_vert</span>
         </div>
         <div class="content_header_right">

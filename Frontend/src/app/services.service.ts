@@ -40,11 +40,11 @@ export class ServicesService {
       observe: "response"
     })
   }
-  deleteContect(Email: any) {
+  deleteContect(name: any) {
     return this.http.get('http://localhost:8080/back/deletecontact', {
       responseType: 'text',
       params: {
-        email: Email,
+        name: name,
       },
       observe: "response"
     })

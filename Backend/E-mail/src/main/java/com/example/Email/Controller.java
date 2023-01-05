@@ -98,9 +98,9 @@ public class Controller {
 	}
 
 	@GetMapping("/deletecontact")
-	public String deleteContact(@RequestParam String[] emails)
+	public String deleteContact(@RequestParam String name)
 	{
-		userManager.currentUser.removeContact(emails);
+		userManager.currentUser.removeContact(name);
 		userManager.userToFile(userManager.currentUser, userManager.currentUserFile);
 		return "done";
 	}

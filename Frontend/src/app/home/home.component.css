@@ -442,7 +442,7 @@
   align-items: center;
   background-color: #dae2f2;
   margin: 0 auto;
-  z-index: 20;
+  /* z-index: 20; */
 
 }
 

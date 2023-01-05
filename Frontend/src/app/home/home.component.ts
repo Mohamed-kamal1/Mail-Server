@@ -31,7 +31,7 @@ export class HomeComponent implements OnInit {
   Date: string = "";
   time: string = "";
   current_folder: string = "";
-  inboxsort = "date";
+  current_sort = "date";
   friends =new Map();
 
   filenames: string[] = [""];
@@ -99,7 +99,8 @@ export class HomeComponent implements OnInit {
       })
   }
 
-  folder_back(folder: string, sortby: string) {
+  folder_back(folder: string, sortby: any) {
+    sortby = this.current_sort;
     let i = 0;
     let Mail: {
       EmailID: {
@@ -186,8 +187,8 @@ export class HomeComponent implements OnInit {
     this.cancel();
 
   }
-  delete_contact(email: string[]) {
-    this.servicesService.deleteContect(email)
+  delete_contact(name:string) {
+    this.servicesService.deleteContect(name)
       .subscribe((Response) => {
         console.log(Response.body);
       });
@@ -265,6 +266,7 @@ export class HomeComponent implements OnInit {
     }
   }
   click_sort(sort: string) {
+    this.current_sort = sort;
     this.folder_back(this.current_folder, sort);
   }
   click_important(degree: string) {
@@ -437,11 +439,29 @@ export class HomeComponent implements OnInit {
         for (let filename of attachments) {
           let link = document.createElement("a");
           link.addEventListener("click", () => this.onDownloadFile(filename));
-          let text = document.createTextNode("download");
+          let text = document.createTextNode(`${filename}`);
+          let icon = document.createElement("span");
+          icon.className = "material-symbols-outlined";
+          icon.appendChild(document.createTextNode("download"));
+
           link.appendChild(text);
           link.style.position
+          link.style.margin = "10px";
+          link.style.padding = "10px";
+          link.style.backgroundColor = " rgb(186, 200, 233)";
+          link.style.borderRadius = "10px";
+          link.style.cursor = "pointer";
+          link.style.display = "flex";
+          link.style.width = "fit-content";
+          link.style.height = "fit-content";
+
+          // icon.style.margin = "10px";
+          link.appendChild(icon);
+
           attach.appendChild(link);
         }
+        attach.style.marginTop = "10px";
+        attach.style.display = "flex";
         contant.appendChild(attach);
 
       }
@@ -504,7 +524,7 @@ export class HomeComponent implements OnInit {
     remove.style.display = "none";
     remove.style.marginLeft = "20px";
     remove.addEventListener("click", () => {
-      this.delete_contact(emails);
+      this.delete_contact(Fname);
       body.style.display = "none";
     })
 
@@ -565,9 +585,6 @@ export class HomeComponent implements OnInit {
 
     });
 
-
-
-
     contant_body.appendChild(icon);
     contant_body.appendChild(name);
     contant_body.appendChild(remove);
@@ -582,6 +599,31 @@ export class HomeComponent implements OnInit {
   cancel() {
     document.getElementById("add_body")!.style.display = "none";
   }
+  refresh() {
+    this.folder_back(this.current_folder, this.current_sort);
+  }
+
+  creat_lable() {
+    let body = document.getElementById("sidebar")!;
+    let option = document.createElement("div");
+    option.className = "sidebar_options";
+    let icon = document.createElement("span");
+    icon.className = "material-symbols-outlined";
+    icon.appendChild(document.createTextNode("label"));
+    icon.style.marginRight = "10px";
+    option.style.margin = "10px";
+    option.style.cursor = "pointer";
+    option.style.display = "flex";
+
+    option.appendChild(icon);
+    let text = document.createTextNode("1");
+    option.appendChild(text);
+
+    body.appendChild(option);
+
+
+  }
+
 
   onUploadFiles(event: any): void {
     this.filenames = [];
@@ -600,8 +642,6 @@ export class HomeComponent implements OnInit {
       }
     );
   }
-
-  // define a function to download files
   onDownloadFile(filename: string): void {
     this.servicesService.download(filename).subscribe(
 
@@ -649,4 +689,6 @@ export class HomeComponent implements OnInit {
     this.fileStatus.requestType = requestType;
     this.fileStatus.percent = Math.round(100 * loaded / total);
   }
+
+
 }
